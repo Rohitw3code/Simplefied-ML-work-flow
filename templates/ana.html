@@ -4,10 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feature Selection</title>
+
+    <style>
+
+.table{
+    justify-content: center;
+}        
+
+table {
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    width: 60%;
+    margin: 20px;
+  }
+
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  tr:nth-child(odd) {
+    background-color: #ffffff;
+  }
+
+  .button-checkbox {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 16px;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.button-checkbox input {
+    display: none;
+}
+
+.button-checkbox .button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none;
+    border-radius: 4px;
+}
+
+.button-checkbox input:checked + .button {
+    background-color: #28a745; 
+}
+
+
+
+</style>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
 </head>
 <body>
+    <div class="container">
 
-    
-    
+    <h3 class="m-3">Simplified ML Training workflow</h3>
+    <div class="table">
+        <form method="POST">
+            <!-- <input type="file" name="file"> -->
+            <input type="number" name="input_value" placeholder="Enter a filter value">
+            <button type="submit" class="btn btn-primary">Display</button>
+        </form>
+    <table>
+            <thead>
+                <tr>
+                    {% for col in column_names %}
+                <th>
+                    {{col}}
+            </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in row_data %}
+          <tr>
+            {% for col, row_ in zip(column_names, row) %}
+            <td>{{row_}}</td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      shape = {{shape[0] }} X {{ shape[1]}}
+
+    <div>
+        Features that you want to include <br/>
+        {% for col in column_names %}
+        <label class="button-checkbox">
+            <input type="checkbox" id="myCheckbox">
+            <span class="button">{{col}}</span>
+        </label>    
+            {% endfor %}
+    </div>
+
+    </div>
+
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 </body>
 </html>
