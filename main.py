@@ -10,7 +10,7 @@ df = {}
 start = True
 
 
-f = "204-795.csv"
+f = "204-32.csv"
 
 @app.route("/")
 def home():
@@ -35,7 +35,7 @@ def selectFeature(val:str=None):
 def load(val:str=None):
     global start,features    
     if request.method == "POST":
-        input_value = request.form.get("input_value", 5)
+        input_value = request.form.get("input_value", 2)
         selectFeature(val)
         setDeafult(f)
         display_dataframe = df.head(int(input_value))
@@ -44,9 +44,11 @@ def load(val:str=None):
             column_names=display_dataframe.columns.values,
             row_data=display_dataframe.values.tolist(),
             shape=display_dataframe.shape,
-            zip=zip,
             db = df,
-            features = features
+            isna = dict(df.isna().sum()),
+            features = features,
+            zip=zip,
+            list=list
             )
     
 

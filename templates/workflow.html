@@ -14,7 +14,7 @@
             <h3 class="m-3">Simplified ML Training workflow</h3>
             <div class="table">
                 <form method="POST">
-                    <input type="number" name="input_value" class="input-filter" placeholder="Enter a filter value">
+                    <input type="number" name="input_value" value="5" class="input-filter" placeholder="Enter a filter value">
                     <button type="submit" class="btn btn-primary">Display</button>
                 </form>
                 <table>
@@ -37,32 +37,61 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                shape of original table =
-                <span class="badge text-bg-primary p-1">
-                    {{ shape[0] }}
-                    X
-                    {{ shape[1] }}
-                </span>
-
-                <div>
-                    <h4>Features that you want to include</h4>
-                    <br/>
-                    <div class="feature-container">
-                        {% for f in features %}
-                            <form method="POST" action="/upload/{{ f }}" class="horizontal-form">
-                                <button class="btn btn-primary" type="submit">{{ f }}</button>
+                <div class="mx-3">
+                    <h6>shape of original table =
+                        <span class="badge text-bg-primary p-2">
+                            {{ shape[0] }}
+                            X
+                            {{ shape[1] }}
+                        </span>
+                    </h6>
+                    <div>
+                        <div class="data-clean">
+                            <h2>Data Cleaning</h2>
+                            <h5>Missing Data</h5>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        {% for col in list(isna.keys()) %}
+                                            <th>
+                                                {{ col }}
+                                            </th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in list(isna.values()) %}
+                                        {% if row > 0 %}
+                                        <td style="color: red;">{{ row }}</td>
+                                        {% else %}
+                                        <td style="color: green;">{{ row }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <h6>total number of rows {{shape[1]}}</h6>
+                            <form method="POST" action="/upload/fix">
+                                <button class="btn btn-primary" type="submit">Fix it</button>                                
                             </form>
-                        {% endfor %}
+                        </div>
+
+                        <h4>Features that you want to include</h4>
+                        <br/>
+                        <div class="feature-container">
+                            {% for f in features %}
+                                <form method="POST" action="/upload/{{ f }}" class="horizontal-form">
+                                    <button class="btn btn-primary" type="submit">{{ f }}</button>
+                                </form>
+                            {% endfor %}
+                        </div>
+                        <br/>
+
+
                     </div>
-                    <br/>
-
-                    
-
 
                 </div>
 
             </div>
-
         </div>
 
 
