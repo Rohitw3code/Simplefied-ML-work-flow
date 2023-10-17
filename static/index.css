@@ -1,0 +1,58 @@
+body {
+    background-image: url('/static/analycis.jpg'); /* Adjust the path to your image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0; /* Remove default body margin */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Make the body full height of the viewport */
+}
+
+.file_choose{
+    width: 40%;
+    margin: 10px;
+    padding: 50px;
+    border-radius: 1%;
+    opacity: 1;
+    background-color: #4f47a4;
+}
+
+
+.form_title{
+    color: rgb(249, 249, 249);
+}
+
+
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    cursor: pointer;
+    background-color: #dd6949;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 400px;
+}
+
+.custom-file-upload:hover {
+    background-color: #47a91a;
+}
+
+.custom-button {
+    background-color: #18878f;
+    color: white;
+    border: none;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.custom-button:hover {
+    background-color: #005f80;
+}
+
