@@ -45,15 +45,18 @@
                 </span>
 
                 <div>
-                    Features that you want to include
+                    <h4>Features that you want to include</h4>
                     <br/>
-                    {% for col in column_names %}
-                        <label class="button-checkbox">
-                            <input type="checkbox" id="myCheckbox">
-                            <span class="button">{{ col }}</span>
-                        </label>
-                    {% endfor %}
+                    <div class="feature-container">
+                        {% for f in features %}
+                            <form method="POST" action="/upload/{{ f }}" class="horizontal-form">
+                                <button class="btn btn-primary" type="submit">{{ f }}</button>
+                            </form>
+                        {% endfor %}
+                    </div>
                     <br/>
+
+                    
 
 
                 </div>

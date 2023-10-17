@@ -4,41 +4,54 @@ import tempfile
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
-meta = {}
-f = "204-795.csv"
+features = ["empty"]
+df = {}
 
+start = True
+
+
+f = "204-795.csv"
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
+def setDeafult(path):
+    global features,start,df
+    if start:
+         df = pd.read_csv(path) 
+         features = list(df.columns)
+         start = False
+
+def selectFeature(val:str=None):
+    if val:
+        if val in features:
+            features.remove(val)
+        else:
+            features.append(val)
+
+@app.route('/upload/<val>', methods=['GET', 'POST'])
 @app.route('/upload', methods=['GET', 'POST'])
-def load():
+def load(val:str=None):
+    global start,features    
     if request.method == "POST":
         input_value = request.form.get("input_value", 5)
-        df = pd.read_csv(f)
-        shape = df.shape
-        df = df.head(int(input_value))
+        selectFeature(val)
+        setDeafult(f)
+        display_dataframe = df.head(int(input_value))
         return render_template(
             'workflow.html',
-            column_names=df.columns.values,
-            row_data=df.values.tolist(),
-            shape=shape,
-            zip=zip
-        )
+            column_names=display_dataframe.columns.values,
+            row_data=display_dataframe.values.tolist(),
+            shape=display_dataframe.shape,
+            zip=zip,
+            db = df,
+            features = features
+            )
     
 
 
-@app.route('/add_value', methods=['POST'])
-def add_value():
-    print("Hello appended")
-    value = request.form.get("new_value")
-    print("value : ",value)
-    # app.config['my_list'].append(value)
-    return redirect('/upload') 
-        
 
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
-    # app.run(host='192.168.123.135', port=5001, debug=True, threaded=False)    
