@@ -62,16 +62,19 @@
                                 <tbody>
                                     {% for row in list(isna.values()) %}
                                         {% if row > 0 %}
-                                        <td style="color: red;">{{ row }}</td>
+                                            <td style="color: red;">{{ row }}</td>
                                         {% else %}
-                                        <td style="color: green;">{{ row }}</td>
+                                            <td style="color: green;">{{ row }}</td>
                                         {% endif %}
                                     {% endfor %}
                                 </tbody>
                             </table>
-                            <h6>total number of rows {{shape[1]}}</h6>
-                            <form method="POST" action="/upload/fix">
-                                <button class="btn btn-primary" type="submit">Fix it</button>                                
+
+                            <h6>total number of rows
+                                {{ shape[1] }}</h6>
+                            <form method="POST" action="/upload?type=fix-missing-data&column=inputvalue">
+                                <input type="text" name="feature" class="input-filter" placeholder="Enter a filter value">
+                                <button class="btn btn-primary" type="submit">Fix it</button>
                             </form>
                         </div>
 
