@@ -1,59 +1,72 @@
-from flask import Flask, render_template, request,redirect
+from flask import Flask, render_template, request, redirect,jsonify
 import pandas as pd
-import tempfile
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
-features = ["empty"]
-df = {}
+df = None
+features = set()
+csv_file = "204-32.csv"
 
-start = True
+
+def load_data():
+    global df, features
+    df = pd.read_csv(csv_file)
+    features = set(df.columns)
+    
 
 
-f = "204-32.csv"
+load_data()
+
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
-def setDeafult(path):
-    global features,start,df
-    if start:
-         df = pd.read_csv(path) 
-         features = list(df.columns)
-         start = False
 
-def selectFeature(val:str=None):
-    if val:
-        if val in features:
-            features.remove(val)
-        else:
-            features.append(val)
+@app.route('/load_data')
+def reload_data():
+    load_data()
+    return redirect('/upload')
 
-@app.route('/upload/<val>', methods=['GET', 'POST'])
+
+@app.route('/select_feature/<feature>')
+def select_feature(feature):
+    if feature in features:
+        features.remove(feature)
+    else:
+        features.add(feature)
+    return redirect('/upload')
+
+
 @app.route('/upload', methods=['GET', 'POST'])
-def load(val:str=None):
-    global start,features    
-    if request.method == "POST":
-        input_value = request.form.get("input_value", 2)
-        selectFeature(val)
-        setDeafult(f)
-        display_dataframe = df.head(int(input_value))
-        return render_template(
-            'workflow.html',
-            column_names=display_dataframe.columns.values,
-            row_data=display_dataframe.values.tolist(),
-            shape=display_dataframe.shape,
-            db = df,
-            isna = dict(df.isna().sum()),
-            features = features,
-            zip=zip,
-            list=list
-            )
-    
+def workflow():
+    global df
+    input_value = request.form.get("input_value", 2)
+    display_dataframe = df.head(int(input_value))
+    return render_template(
+        'workflow.html',
+        df=df,
+        display_dataframe=display_dataframe,
+        row_data=display_dataframe.values.tolist(),
+        isna=dict(df.isna().sum()),
+        features=features,
+        list=list
+    )
 
+@app.route('/get_data', methods=['POST'])
+def get_data():
+    selected_option = request.form['select-feature']
+    data = {}
+    if selected_option == 'Season':
+        data['add_button'] = True
+        data['button_name'] = 'btn1'
+    elif selected_option == 'GF':
+        data['add_button'] = True
+        data['button_name'] = 'btn2'
+    else:
+        data['add_button'] = False
 
-
+    return jsonify(data)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
