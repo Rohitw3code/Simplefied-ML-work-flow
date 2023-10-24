@@ -2,6 +2,7 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import Dataframe from './componets/Dataframe';
 import MissingData from './componets/MissingData';
+import DataTypeChange from './componets/DataTypeChange';
 
 function App() {
   const [userInput, setUserInput] = useState(1);
@@ -24,6 +25,9 @@ function App() {
         <Dataframe rows={userInput} shapeDisplay="true" />
       </div>
       <div className='section B'>
+        <DataTypeChange />
+      </div>
+      <div className='section C'>
         <button className='section-btn' onClick={sectionBVisibleFun}>Missing Value</button>
         <MissingData />
       </div>
