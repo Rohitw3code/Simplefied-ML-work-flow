@@ -7,12 +7,16 @@ function MissingData(props) {
     const [loading, setLoading] = useState(true); // Add loading state
     const [error, setError] = useState(null); // Add error state
     const [clickedButton, setClickedButton] = useState(null);
+    const [btnDtype, setBtnDtype] = useState(null);
+
+    // Update Dataset isna sum and dtypes
+    const [updated_ds, setUpdatedDs] = useState({});
 
     useEffect(() => {
         fetchData();
     }, [props.rows]);
 
-    const fetchData = async () => {
+    const fetchData = async (update) => {
         try {
             const resp = await fetch(`http://127.0.0.1:5001/api/df/missingdata`);
             if (resp.ok) {
@@ -30,6 +34,45 @@ function MissingData(props) {
         }
     };
 
+    const post = async (key, value) => {
+        const url = 'http://127.0.0.1:5001/api/df/missingdata/operation'; // Replace with your API endpoint URL
+        // Data to be sent in the request body
+        const data = {
+            key: key,
+            operation: value,
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST', // Use PUT for updating data
+                headers: {
+                    'Content-Type': 'application/json', // Specify the content type as JSON
+                },
+                body: JSON.stringify(data), // Convert data to JSON and send in the request body
+            });
+
+            if (response.ok) {
+                // Request was successful
+                const jsonResponse = await response.json();
+                if (jsonResponse.updated) {
+                    setUpdatedDs(jsonResponse);
+                }
+                console.log('Data updated successfully:', jsonResponse);
+            } else {
+                // Request failed
+                console.error('Failed to update data:', response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    const handleMissingData = (key, opra) => {
+        setUpdatedDs({});
+        post(key, opra);
+    }
+
+
     if (loading) {
         return <div>Loading...</div>; // Show a loading message while fetching data
     }
@@ -38,9 +81,11 @@ function MissingData(props) {
         return <div>Error: {error}</div>; // Show an error message if there was an error
     }
 
-    const handleButtonClick = (key) => {
+    const handleButtonClick = (key, dtype) => {
         setClickedButton(key);
+        setBtnDtype(dtype);
     };
+
 
     return (
         <div className='section'>
@@ -59,27 +104,42 @@ function MissingData(props) {
                         <button
                             key={key}
                             className={`fix btn ${clickedButton === key ? 'clicked' : ''}`}
-                            onClick={() => handleButtonClick(key)}
-                        >
+                            onClick={() => handleButtonClick(key, dtypes[key])}>
                             {key}
-                        </button>)
+                        </button>
+                    )
                 ))}
+
 
                 {clickedButton && (
                     <div className="additional-buttons">
-                        {clickedButton === 'Age' && (
-                            <button className="btn fixer">mean</button>
+                        {btnDtype === 'float64' && (
+                            <>
+                                <button className="btn fixer" onClick={() => handleMissingData(clickedButton, "mean")}>mean</button>
+                                <button className="btn fixer" onClick={() => handleMissingData(clickedButton, "median")}>median</button>
+                            </>
                         )}
-                        {clickedButton === 'Cabin' && (<>
-                            <button className="btn fixer">mode</button>
-                            <button className="btn fixer">median</button>
+                        {btnDtype === 'object' && (<>
+                            <button className="btn fixer" onClick={() => handleMissingData(clickedButton, "mode")}>mode</button>
                         </>
                         )}
-                        <button className="btn fixer">remove</button>
-                        <button className="btn fixer">replace</button>
+                        <button className="btn fixer" onClick={() => handleMissingData(clickedButton, "delete")}>delete (column)</button>
+                        <button className="btn fixer" onClick={() => handleMissingData(clickedButton, "remove")}>remove (nan)</button>
+                        <button className="btn fixer" onClick={() => handleMissingData(clickedButton, "replace")}>replace</button>
                     </div>)}
-
             </div>
+            {updated_ds.updated && (
+                <>
+                    <div className="horizontal-table">
+                        {Object.keys(updated_ds.data).map((key) => (
+                            <div key={key} className="table-row">
+                                <div className="table-cell key">{key} {updated_ds.dtypes[key]}</div>
+                                <div className="table-cell value">{updated_ds.data[key]}</div>
+                            </div>
+                        ))}
+                    </div>
+                </>
+            )}
         </div>
     );
 }
