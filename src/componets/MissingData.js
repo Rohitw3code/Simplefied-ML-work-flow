@@ -34,13 +34,17 @@ function MissingData(props) {
         }
     };
 
-    const post = async (key, value) => {
+    const post = async (key, value, replace) => {
         const url = 'http://127.0.0.1:5001/api/df/missingdata/operation'; // Replace with your API endpoint URL
         // Data to be sent in the request body
         const data = {
             key: key,
             operation: value,
         };
+
+        if (replace !== 'nan') {
+            data.replace = replace;
+        }
 
         try {
             const response = await fetch(url, {
@@ -67,9 +71,9 @@ function MissingData(props) {
         }
     }
 
-    const handleMissingData = (key, opra) => {
+    const handleMissingData = (key, opra, replace = 'nan') => {
         setUpdatedDs({});
-        post(key, opra);
+        post(key, opra, replace);
     }
 
 
@@ -125,7 +129,14 @@ function MissingData(props) {
                         )}
                         <button className="btn fixer" onClick={() => handleMissingData(clickedButton, "delete")}>delete (column)</button>
                         <button className="btn fixer" onClick={() => handleMissingData(clickedButton, "remove")}>remove (nan)</button>
-                        <button className="btn fixer" onClick={() => handleMissingData(clickedButton, "replace")}>replace</button>
+
+                        <input type='text' placeholder='replace' className='replace-input' />
+                        <button className="btn fixer" onClick={() => {
+                            const inputValue = document.querySelector('.replace-input').value; // Get the input value
+                            handleMissingData(clickedButton, 'replace', inputValue);
+                        }}>
+                            replace
+                        </button>
                     </div>)}
             </div>
             {updated_ds.updated && (
