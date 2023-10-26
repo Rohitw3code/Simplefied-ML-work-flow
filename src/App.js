@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Dataframe from './componets/Dataframe';
 import MissingData from './componets/MissingData';
 import DataTypeChange from './componets/DataTypeChange';
+import DataEncoding from './componets/DataEncoding';
 
 function App() {
   const [userInput, setUserInput] = useState(1);
@@ -30,6 +31,10 @@ function App() {
       <div className='section C'>
         <button className='section-btn' onClick={sectionBVisibleFun}>Missing Value</button>
         <MissingData />
+      </div>
+      <div className='section D'>
+        <button className='section-btn' onClick={sectionBVisibleFun}>Data Encoding</button>
+        <DataEncoding />
       </div>
     </div>
   );

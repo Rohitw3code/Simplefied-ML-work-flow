@@ -1,7 +1,7 @@
 import './MissingData.css'
 import React, { useEffect, useState } from 'react';
 
-function MissingData(props) {
+function MissingData() {
     const [data, setData] = useState({});
     const [dtypes, setDtypes] = useState({});
     const [loading, setLoading] = useState(true); // Add loading state
@@ -14,7 +14,7 @@ function MissingData(props) {
 
     useEffect(() => {
         fetchData();
-    }, [props.rows]);
+    }, []);
 
     const fetchData = async (update) => {
         try {
@@ -103,6 +103,7 @@ function MissingData(props) {
             </div>
             <div>
                 <h4>Fix the missing data</h4>
+                <h5>Data Imputation and Deletion</h5>
                 {Object.keys(data).map((key) => (
                     data[key] !== 0 && (
                         <button

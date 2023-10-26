@@ -29,7 +29,7 @@ function DataTypeChange() {
 
     useEffect(() => {
         fetchData();
-    });
+    },[]);
 
     return (<>
         <h3>Data type casting</h3>
