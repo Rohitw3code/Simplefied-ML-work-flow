@@ -1,4 +1,10 @@
 
+.select-dtc{
+    background-color: inherit;
+    color: white;
+    border: none;
+}
+
 
 .key-dtc{
     background-color: bisque;
@@ -22,4 +28,8 @@
 .cell-column{
     background-color: rgb(118, 33, 236);
     color: white;
+}
+
+.not-cast-dtc{
+    color: red;
 }

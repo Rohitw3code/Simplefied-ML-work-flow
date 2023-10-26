@@ -26,11 +26,11 @@ function App() {
         <Dataframe rows={userInput} shapeDisplay="true" />
       </div>
       <div className='section B'>
-        <DataTypeChange />
-      </div>
-      <div className='section C'>
         <button className='section-btn' onClick={sectionBVisibleFun}>Missing Value</button>
         <MissingData />
+      </div>
+      <div className='section C'>
+        <DataTypeChange />
       </div>
       <div className='section D'>
         <button className='section-btn' onClick={sectionBVisibleFun}>Data Encoding</button>
