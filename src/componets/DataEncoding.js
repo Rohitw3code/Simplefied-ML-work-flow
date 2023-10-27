@@ -1,5 +1,6 @@
 import "./DataEncoding.css";
 import React, { useEffect, useState } from "react";
+import Dataframe from "./Dataframe";
 
 function DataEncoding() {
   const [data, setData] = useState({});
@@ -29,34 +30,38 @@ function DataEncoding() {
     }
   };
 
-  const fetchColsData = async ()=>{
-    const url = 'http://127.0.0.1:5001/api/df/colsdata'; // Replace with your API endpoint URL
+  const fetchColsData = async () => {
+    const url = "http://127.0.0.1:5001/api/df/colsdata"; // Replace with your API endpoint URL
     // Data to be sent in the request body
-    const data = {
-        cols: selectedColumns
+    const payload = {
+      cols: selectedColumns,
     };
     try {
-        const response = await fetch(url, {
-            method: 'POST', // Use PUT for updating data
-            headers: {
-                'Content-Type': 'application/json', // Specify the content type as JSON
-            },
-            body: JSON.stringify(data), // Convert data to JSON and send in the request body
-        });
+      const response = await fetch(url, {
+        method: "POST", // Use PUT for updating data
+        headers: {
+          "Content-Type": "application/json", // Specify the content type as JSON
+        },
+        body: JSON.stringify(payload), // Convert data to JSON and send in the request body
+      });
 
-        if (response.ok) {
-            // Request was successful
-            const jsonResponse = await response.json();
-            setData(jsonResponse.data);
-            console.log('Data updated successfully:', jsonResponse);
-        } else {
-            // Request failed
-            console.error('Failed to update data:', response.status, response.statusText);
-        }
+      if (response.ok) {
+        // Request was successful
+        const jsonResponse = await response.json();
+        setData(jsonResponse.data);
+        console.log("Fetch Successfully:", jsonResponse);
+      } else {
+        // Request failed
+        console.error(
+          "Failed to update data:",
+          response.status,
+          response.statusText
+        );
+      }
     } catch (error) {
-        console.error('Error:', error);
+      console.error("Error:", error);
     }
-  }
+  };
 
   const fetchColumnData = (col) => {
     const newSelectedColumns = [...selectedColumns];
@@ -95,26 +100,16 @@ function DataEncoding() {
         ))}
       </div>
       <div>
-          <h4>Selected Columns:</h4>
-          {selectedColumns.map((col, index) => (
-            <button className="selected-column-btn-de" key={index}>
-              {col}
-            </button>
-          ))}
+        <h4>Selected Columns:</h4>
+        {selectedColumns.map((col, index) => (
+          <button className="selected-column-btn-de" key={index}>
+            {col}
+          </button>
+        ))}
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            {Object.keys(data).map((key, index) => (
-              <th key={index}>{key}</th>
-            ))}
-          </tr>
-        </thead>
-      </table>
-
-
-
+      <Dataframe rows={4} cols={selectedColumns} />
+      
     </>
   );
 }

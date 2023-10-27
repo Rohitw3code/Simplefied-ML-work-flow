@@ -23,7 +23,7 @@ function App() {
       <h1 className='title'>Data Preprocessing </h1>
       <div className='section A'>
         <input className='input-head' placeholder='Enter number of rows' type="number" value={userInput} onChange={handleInputChange} />
-        <Dataframe rows={userInput} shapeDisplay="true" />
+        <Dataframe rows={userInput} cols={['Sex']} shapeDisplay="true" />
       </div>
       <div className='section B'>
         <button className='section-btn' onClick={sectionBVisibleFun}>Missing Value</button>

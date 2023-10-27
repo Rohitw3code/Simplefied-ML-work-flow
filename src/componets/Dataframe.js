@@ -1,5 +1,5 @@
-import './Dataframe.css';
-import React, { useEffect, useState } from 'react';
+import "./Dataframe.css";
+import React, { useEffect, useState } from "react";
 
 function Dataframe(props) {
   const [data, setData] = useState([]);
@@ -9,15 +9,27 @@ function Dataframe(props) {
 
   useEffect(() => {
     fetchData();
-  }, [props.rows]);
+  }, [props.cols]);
 
   const fetchData = async () => {
     try {
-      const resp = await fetch(`http://127.0.0.1:5001/api/df/${props.rows}`);
+      const queryParams = new URLSearchParams();
+      if(props.cols){
+        queryParams.append("cols", props.cols.join(","));
+      }
+      else{
+        queryParams.append("cols", [].join(","));
+      }
+
+      const url = `http://127.0.0.1:5001/api/df/${
+        props.rows
+      }?${queryParams.toString()}`;
+      const resp = await fetch(url);
       if (resp.ok) {
         const jsonData = await resp.json();
         setData(jsonData.data);
-        setShape(jsonData.shape)
+        setShape(jsonData.shape);
+        // console.log("Data : ", jsonData.data);
         setLoading(false); // Set loading to false after data is fetched
       } else {
         setError("Failed to fetch data");
@@ -37,13 +49,17 @@ function Dataframe(props) {
     return <div>Error: {error}</div>; // Show an error message if there was an error
   }
 
+  const buttonArray = Array.from({ length: props.rows }, (_, index) => index);
+
   return (
-    <div className='section'>
+    <div className="section">
       {props.shapeDisplay ? (
-        <div className='tags'>
-          <button className='tag'>Row {shape[0]}</button>
-          <button className='tag'>Column  {shape[1]}</button>
-          <button className='tag'>Shape  {shape[0]} x {shape[1]}</button>
+        <div className="tags">
+          <button className="tag">Row {shape[0]}</button>
+          <button className="tag">Column {shape[1]}</button>
+          <button className="tag">
+            Shape {shape[0]} x {shape[1]}
+          </button>
         </div>
       ) : null}
       <table>
@@ -55,17 +71,23 @@ function Dataframe(props) {
           </tr>
         </thead>
         <tbody>
-          {data.Name.map((value, index) => (
-            <tr key={index}>
-              {Object.values(data).map((values, idx) => (
-                <td key={idx}>{values[index]}</td>
-              ))}
+          {buttonArray.map((index) => (
+            <tr>
+              {Object.values(data).map((values, idx) =>
+                values.length > 0 ? (
+                  <>
+                    <td key={idx}>{values[index]}</td>
+                  </>
+                ) : null
+              )}
             </tr>
           ))}
         </tbody>
       </table>
       {props.shapeDisplay ? (
-        <button className='shape'>Shape {props.rows} x {shape[1]}</button>
+        <button className="shape">
+          Shape {props.rows} x {shape[1]}
+        </button>
       ) : null}
     </div>
   );
