@@ -10,6 +10,16 @@
     margin-bottom: 10px;
 }
 
+.remove-cat-cols-de{
+    border: none;
+    background-color: inherit;
+    color: red;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 5px;
+}
+
 .selected-column-btn-de{
     border: none;
     padding: 10px;
@@ -17,7 +27,6 @@
     margin-top: 10px;
     border-radius: 10px;
     font-size: 15px;
-    cursor: pointer;
     background-color: rgb(133, 254, 126);
     margin-bottom: 10px;
 }

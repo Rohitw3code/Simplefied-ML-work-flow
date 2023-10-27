@@ -70,6 +70,12 @@ function DataEncoding() {
     fetchColsData();
   };
 
+  const removeCol = (col) => {
+    setSelectedColumns((prevSelectedColumns) =>
+      prevSelectedColumns.filter((item) => item !== col)
+    );
+  };
+
   if (loading) {
     return <div>Loading...</div>; // Show a loading message while fetching data
   }
@@ -104,12 +110,19 @@ function DataEncoding() {
         {selectedColumns.map((col, index) => (
           <button className="selected-column-btn-de" key={index}>
             {col}
+            <label
+              className="remove-cat-cols-de"
+              onClick={() => {
+                removeCol(col);
+              }}
+            >
+              x
+            </label>
           </button>
         ))}
       </div>
 
       <Dataframe rows={4} cols={selectedColumns} />
-      
     </>
   );
 }
