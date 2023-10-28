@@ -1,4 +1,4 @@
-import './App.css';
+import './css/App.css';
 import React, { useEffect, useState } from 'react';
 import Dataframe from './componets/Dataframe';
 import MissingData from './componets/MissingData';

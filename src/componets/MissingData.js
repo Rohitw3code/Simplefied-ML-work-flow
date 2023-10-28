@@ -1,4 +1,4 @@
-import './MissingData.css'
+import '../css/MissingData.css'
 import React, { useEffect, useState } from 'react';
 
 function MissingData() {

@@ -1,4 +1,4 @@
-import "./DataEncoding.css";
+import "../css/DataEncoding.css";
 import React, { useEffect, useState } from "react";
 import Dataframe from "./Dataframe";
 import DfUniqueData from "./DfUniqueData";

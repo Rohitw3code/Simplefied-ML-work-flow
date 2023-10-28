@@ -1,4 +1,4 @@
-import "./Dataframe.css";
+import "../css/Dataframe.css";
 import React, { useEffect, useState } from "react";
 
 function Dataframe(props) {

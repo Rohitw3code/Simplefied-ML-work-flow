@@ -1,4 +1,4 @@
-import './DataTypeChange.css'
+import '../css/DataTypeChange.css'
 import React, { useEffect, useState } from 'react';
 
 function DataTypeChange() {

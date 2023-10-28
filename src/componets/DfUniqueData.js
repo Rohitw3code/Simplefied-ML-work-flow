@@ -1,4 +1,4 @@
-import './DfUniqueData.css'
+import '../css/DfUniqueData.css'
 import React, { useEffect, useState } from 'react';
 
 function DfUniqueData() {
