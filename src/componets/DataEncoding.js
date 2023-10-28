@@ -5,6 +5,8 @@ import DfUniqueData from "./DfUniqueData";
 
 function DataEncoding() {
   const [data, setData] = useState({});
+  const [encodedDataCols, setEncodedDataCols] = useState({});
+  const [showDataframe, setShowDataframe] = useState(false);
   const [columns, setColumns] = useState({});
   const [loading, setLoading] = useState(true); // Add loading state
   const [error, setError] = useState(null); // Add error state
@@ -50,6 +52,40 @@ function DataEncoding() {
         // Request was successful
         const jsonResponse = await response.json();
         setData(jsonResponse.data);
+        console.log("Fetch Successfully:", jsonResponse);
+      } else {
+        // Request failed
+        console.error(
+          "Failed to update data:",
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const encodeDF = async () => {
+    const url = "http://127.0.0.1:5001/api/df/encode-df"; // Replace with your API endpoint URL
+    // Data to be sent in the request body
+    const payload = {
+      cols: selectedColumns,
+    };
+    try {
+      const response = await fetch(url, {
+        method: "POST", // Use PUT for updating data
+        headers: {
+          "Content-Type": "application/json", // Specify the content type as JSON
+        },
+        body: JSON.stringify(payload), // Convert data to JSON and send in the request body
+      });
+
+      if (response.ok) {
+        // Request was successful
+        const jsonResponse = await response.json();
+        setEncodedDataCols(jsonResponse.cols);
+        setShowDataframe(true);
         console.log("Fetch Successfully:", jsonResponse);
       } else {
         // Request failed
@@ -110,6 +146,11 @@ function DataEncoding() {
       </div>
       <div>
         <h4>Selected Columns:</h4>
+        {selectedColumns.length > 0 ? (
+          ""
+        ) : (
+          <h5>NO Categorical Feature is Selected</h5>
+        )}
         {selectedColumns.map((col, index) => (
           <button className="selected-column-btn-de" key={index}>
             {col}
@@ -125,8 +166,31 @@ function DataEncoding() {
         ))}
       </div>
 
-      <Dataframe rows={3} cols={selectedColumns}  />
+      <Dataframe rows={3} cols={selectedColumns} />
 
+      <div>
+        {selectedColumns.length > 0 ? (
+          <>
+            <button
+              className="encode-btn-de"
+              onClick={() => {
+                encodeDF();
+              }}
+            >
+              Encode
+            </button>
+          </>
+        ) : (
+          ""
+        )}
+
+        {showDataframe && (
+          <>
+            <h4>Encoded Data</h4>
+            <Dataframe rows={3} cols={encodedDataCols} />
+          </>
+        )}
+      </div>
     </>
   );
 }

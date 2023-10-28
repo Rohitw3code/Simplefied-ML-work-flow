@@ -10,6 +10,15 @@
     margin-bottom: 10px;
 }
 
+.encode-btn-de{
+    border: none;
+    background-color: blueviolet;
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
 .remove-cat-cols-de{
     border: none;
     background-color: inherit;
