@@ -143,8 +143,6 @@ function DataEncoding() {
             {item}
           </button>
         ))}
-      </div>
-      <div>
         <h4>Selected Columns:</h4>
         {selectedColumns.length > 0 ? (
           ""
@@ -164,32 +162,32 @@ function DataEncoding() {
             </label>
           </button>
         ))}
-      </div>
 
-      <Dataframe rows={3} cols={selectedColumns} />
+        <Dataframe rows={3} cols={selectedColumns} />
 
-      <div>
-        {selectedColumns.length > 0 ? (
-          <>
-            <button
-              className="encode-btn-de"
-              onClick={() => {
-                encodeDF();
-              }}
-            >
-              Encode
-            </button>
-          </>
-        ) : (
-          ""
-        )}
+        <div>
+          {selectedColumns.length > 0 ? (
+            <>
+              <button
+                className="encode-btn-de"
+                onClick={() => {
+                  encodeDF();
+                }}
+              >
+                Encode
+              </button>
+            </>
+          ) : (
+            ""
+          )}
 
-        {showDataframe && (
-          <>
-            <h4>Encoded Data</h4>
-            <Dataframe rows={3} cols={encodedDataCols} />
-          </>
-        )}
+          {showDataframe && (
+            <>
+              <h4>Encoded Data</h4>
+              <Dataframe rows={3} cols={encodedDataCols} />
+            </>
+          )}
+        </div>
       </div>
     </>
   );
