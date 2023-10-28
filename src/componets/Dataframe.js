@@ -9,7 +9,7 @@ function Dataframe(props) {
 
   useEffect(() => {
     fetchData();
-  }, [props.cols]);
+  },[props.cols]);
 
   const fetchData = async () => {
     try {
@@ -29,24 +29,23 @@ function Dataframe(props) {
         const jsonData = await resp.json();
         setData(jsonData.data);
         setShape(jsonData.shape);
-        // console.log("Data : ", jsonData.data);
-        setLoading(false); // Set loading to false after data is fetched
+        setLoading(false); 
       } else {
         setError("Failed to fetch data");
-        setLoading(false); // Set loading to false in case of an error
+        setLoading(false); 
       }
     } catch (error) {
       setError("Error: " + error.message);
-      setLoading(false); // Set loading to false in case of an error
+      setLoading(false); 
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading message while fetching data
+    return <div>Loading...</div>; 
   }
 
   if (error) {
-    return <div>Error: {error}</div>; // Show an error message if there was an error
+    return <div>Error: {error}</div>;
   }
 
   const buttonArray = Array.from({ length: props.rows }, (_, index) => index);

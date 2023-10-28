@@ -1,0 +1,11 @@
+.horizontal-table {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+
+
+  .shape-dud{
+    margin: 10px;
+}
