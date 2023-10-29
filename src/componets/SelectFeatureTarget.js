@@ -34,6 +34,7 @@ function SelectFeatureTarget() {
         if (jsonData.update) {
           setUpdate(true);
           setTargetfeature(col);
+          updateFeature(selectedFeatures,targetfeature);
         }
       }
     } catch (error) {
@@ -41,14 +42,41 @@ function SelectFeatureTarget() {
     }
   };
 
-  const updateFeature = () =>{
-    
+  const updateFeature = async (sf,tf) =>{
+    const url = "http://127.0.0.1:5001/api/feature-target";
+    const payload = {
+      feature: sf,
+      target:tf
+    };
+    try {
+      const response = await fetch(url, {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json", 
+        },
+        body: JSON.stringify(payload), 
+      });
+
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        console.log("Fetch Successfully:", jsonResponse);
+      } else {
+        console.error(
+          "Failed to update data:",
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
   const addinfeature = (col) => {
     const newSelectedColumns = [...selectedFeatures]; // Create a copy of the array
     newSelectedColumns.push(col);
     setSelectedFeatures(newSelectedColumns);
+    updateFeature(selectedFeatures);
     if (selectedFeatures.includes(col)) {
       const updatedSelectedFeatures = selectedFeatures.filter(
         (item) => item !== col
