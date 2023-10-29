@@ -16,8 +16,7 @@
     color: white;
 }
 
-
-.feature-btn-st{
+.train-feature-btn-st{
     border: none;
     padding: 10px;
     margin-right: 10px;
@@ -31,6 +30,26 @@
 }
 
 .selected-feature{
-    background-color: green;
+    background-color: blueviolet;
     color: white;
+}
+
+.container {
+  display: flex; /* Use flexbox to arrange items side by side */
+}
+
+.dataframe-container {
+  margin: 0px;
+}
+
+.feature-title-x{
+    margin-left: 40px;
+    font-weight: bold;
+    color: red;
+}
+
+.feature-title-y{
+    margin-left: 40px;
+    font-weight: bold;
+    color: green;
 }

@@ -1,11 +1,12 @@
 import "../css/SelectFeatureTarget.css";
+import Dataframe from "./Dataframe";
 import React, { useEffect, useState } from "react";
 
 function SelectFeatureTarget() {
   const [columns, setColumns] = useState([]);
   const [update, setUpdate] = useState(false);
   const [targetfeature, setTargetfeature] = useState("");
-  const [selectedFeatures, setSelectedFeatures] = useState({});
+  const [selectedFeatures, setSelectedFeatures] = useState([]); // Change this to an array
 
   useEffect(() => {
     fetchData();
@@ -40,14 +41,43 @@ function SelectFeatureTarget() {
     }
   };
 
+  const updateFeature = () =>{
+    
+  }
+
+  const addinfeature = (col) => {
+    const newSelectedColumns = [...selectedFeatures]; // Create a copy of the array
+    newSelectedColumns.push(col);
+    setSelectedFeatures(newSelectedColumns);
+    if (selectedFeatures.includes(col)) {
+      const updatedSelectedFeatures = selectedFeatures.filter(
+        (item) => item !== col
+      );
+      setSelectedFeatures(updatedSelectedFeatures);
+    }
+  };
+
   return (
     <div>
       <h2>Features:</h2>
       {columns.map((column, index) => (
         <>
-        {column === targetfeature?"":<>
-        <button className={`target-feature-btn-st`}>{column}</button>
-        </>}                
+          {column === targetfeature ? (
+            ""
+          ) : (
+            <>
+              <button
+                className={`train-feature-btn-st ${
+                  selectedFeatures.includes(column) ? "selected-feature" : ""
+                }`}
+                onClick={() => {
+                  addinfeature(column);
+                }}
+              >
+                {column}
+              </button>
+            </>
+          )}
         </>
       ))}
 
@@ -70,6 +100,31 @@ function SelectFeatureTarget() {
           <h3>{targetfeature}</h3>
         </>
       )}
+
+      <div>
+        <div className="container">
+          <div className="dataframe-container">
+            {selectedFeatures.length === 0 ? (
+              ""
+            ) : (
+              <>
+              <div className="feature-title-x">Train Feature (X)</div>
+                <Dataframe rows={3} cols={selectedFeatures} />
+              </>
+            )}
+          </div>
+          <div className="dataframe-container">
+            {targetfeature === "" ? (
+              ""
+            ) : (
+              <>
+              <div className="feature-title-y">Target (Y)</div>
+                <Dataframe rows={3} cols={[targetfeature]} />
+              </>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
