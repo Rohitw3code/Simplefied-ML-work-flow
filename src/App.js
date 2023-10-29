@@ -5,7 +5,8 @@ import MissingData from './componets/MissingData';
 import DataTypeChange from './componets/DataTypeChange';
 import DataEncoding from './componets/DataEncoding';
 import DfUniqueData from './componets/DfUniqueData';
-import SelectTarget from './componets/SelectTarget';
+import SelectFeatureTarget from './componets/SelectFeatureTarget';
+import TrainTestSplit from './componets/TrainTestSplit';
 
 function App() {
 
@@ -62,7 +63,11 @@ function App() {
       </div>
 
       <div className='section E'>
-        <SelectTarget />
+        <SelectFeatureTarget />
+      </div>
+
+      <div className='section E'>
+        <TrainTestSplit />
       </div>
 
     </div>

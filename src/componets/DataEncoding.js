@@ -18,7 +18,7 @@ function DataEncoding() {
 
   const fetchData = async (update) => {
     try {
-      const resp = await fetch(`http://127.0.0.1:5001/api/df/dataencoding`);
+      const resp = await fetch(`http://127.0.0.1:5001/api/encode-columns`);
       if (resp.ok) {
         const jsonData = await resp.json();
         setColumns(jsonData.columns);
