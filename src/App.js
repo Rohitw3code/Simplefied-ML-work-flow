@@ -5,6 +5,7 @@ import MissingData from './componets/MissingData';
 import DataTypeChange from './componets/DataTypeChange';
 import DataEncoding from './componets/DataEncoding';
 import DfUniqueData from './componets/DfUniqueData';
+import SelectTarget from './componets/SelectTarget';
 
 function App() {
 
@@ -59,6 +60,11 @@ function App() {
         <button className='section-btn' onClick={sectionBVisibleFun}>Data Encoding</button>
         <DataEncoding />
       </div>
+
+      <div className='section E'>
+        <SelectTarget />
+      </div>
+
     </div>
   );
 }

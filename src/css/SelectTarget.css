@@ -1,0 +1,12 @@
+.target-feature-btn-st{
+    border: none;
+    padding: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    color: black;
+    background-color: rgb(108, 186, 241);
+    margin-bottom: 10px;
+}
