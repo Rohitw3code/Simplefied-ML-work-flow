@@ -7,6 +7,7 @@ import DataEncoding from './componets/DataEncoding';
 import DfUniqueData from './componets/DfUniqueData';
 import SelectFeatureTarget from './componets/SelectFeatureTarget';
 import TrainTestSplit from './componets/TrainTestSplit';
+import MLAlgo from './componets/MLAlog';
 
 function App() {
 
@@ -73,6 +74,10 @@ function App() {
 
       <div className='section E'>
         <TrainTestSplit />
+      </div>
+
+      <div className='section E'>
+        <MLAlgo />
       </div>
 
     </div>
