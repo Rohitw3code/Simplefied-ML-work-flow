@@ -1,0 +1,33 @@
+.input-field-tts{
+    padding: 10px;
+    border: none;
+    margin: 10px;
+}
+
+.train-test-split-field-tts{
+    display: flex;
+}
+
+.select-tts{
+    border: none;
+    margin-left: 10px;
+    padding: 10px;
+}
+
+.shuffle-tts{
+    margin: 10px;
+}
+
+.split-btn{
+    border: none;
+    padding: 10px;
+    width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    background-color: rgb(133, 254, 126);
+    margin-bottom: 10px;
+}

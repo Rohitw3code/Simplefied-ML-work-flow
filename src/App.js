@@ -45,18 +45,23 @@ function App() {
 
   return (
     <div>
+      
       <h1 className='title'>Data Preprocessing </h1>
+      
       <div className='section A'>
         <input className='input-head' placeholder='Enter number of rows' type="number" value={userInput} onChange={handleInputChange} />
         <Dataframe rows={userInput} cols={[]} shapeDisplay="true" />
       </div>
+      
       <div className='section B'>
         <button className='section-btn' onClick={sectionBVisibleFun}>Missing Value</button>
         <MissingData />
       </div>
+      
       <div className='section C'>
         <DataTypeChange />
       </div>
+
       <div className='section D'>
         <button className='section-btn' onClick={sectionBVisibleFun}>Data Encoding</button>
         <DataEncoding />
