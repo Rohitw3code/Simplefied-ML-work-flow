@@ -3,7 +3,7 @@ import "../css/MLAlgo.css";
 
 function MLAlgo() {
   const [regression, setRegression] = useState([]);
-  const [selectReg, setSelectReg] = useState([]);
+  const [selectAlgo, setSelectAlgo] = useState('linear regression');
   const [algoType, setAlgoType] = useState("regression");
   const [classification, setClassification] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
@@ -29,8 +29,39 @@ function MLAlgo() {
     }
   };
 
-  const setSelectedRegression = (e) => {
-    setSelectReg(e.target.value);
+  const modelTrain = async () => {
+    const url = "http://127.0.0.1:5001/api/model-train-algo";
+    const data = {
+      algoType: algoType,
+      algo: selectAlgo,
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        console.log("Data updated successfully:", jsonResponse);
+      } else {
+        console.error(
+          "Failed to update data:",
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const setSelectedAlgorithm = (e) => {
+    setSelectAlgo(e.target.value);
   };
 
   useEffect(() => {
@@ -55,9 +86,9 @@ function MLAlgo() {
       <h3>Choose Alogorithm for Model Training</h3>
       <select
         className="select-algo-type-mlalgo"
-        value={selectReg || regression[0]}
+        value={selectAlgo || regression[0]}
         onChange={(e) => {
-          setSelectedRegression(e);
+          setSelectedAlgorithm(e);
         }}
       >
         {algoType === "regression" ? (
@@ -78,7 +109,9 @@ function MLAlgo() {
           </>
         )}
       </select>
-      <button className="train-btn">Model Train</button>
+      <button className="train-btn" onClick={()=>modelTrain()}>
+        Model Train
+      </button>
     </>
   );
 }
