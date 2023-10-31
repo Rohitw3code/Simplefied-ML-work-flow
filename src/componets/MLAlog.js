@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import "../css/MLAlgo.css";
 
 function MLAlgo() {
+  const [features, setFeatures] = useState([]);
+  const [target, setTarget] = useState("");
   const [regression, setRegression] = useState([]);
-  const [selectAlgo, setSelectAlgo] = useState('linear regression');
+  const [selectAlgo, setSelectAlgo] = useState("Linear Regression");
   const [algoType, setAlgoType] = useState("regression");
   const [classification, setClassification] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
@@ -29,7 +31,26 @@ function MLAlgo() {
     }
   };
 
+  const fetchFeatures = async () => {
+    try {
+      const resp = await fetch(`http://127.0.0.1:5001/api/model-predict`);
+      if (resp.ok) {
+        const jsonData = await resp.json();
+        setFeatures(jsonData.features);
+        setTarget(jsonData.target);
+        setLoading(false);
+      } else {
+        setError("Failed to fetch data");
+        setLoading(false);
+      }
+    } catch (error) {
+      setError("Error: " + error.message);
+      setLoading(false);
+    }
+  };
+
   const modelTrain = async () => {
+    fetchFeatures();
     const url = "http://127.0.0.1:5001/api/model-train-algo";
     const data = {
       algoType: algoType,
@@ -82,7 +103,6 @@ function MLAlgo() {
         <option value="regression">Regression</option>
         <option value="classification">Classification</option>
       </select>
-
       <h3>Choose Alogorithm for Model Training</h3>
       <select
         className="select-algo-type-mlalgo"
@@ -109,9 +129,21 @@ function MLAlgo() {
           </>
         )}
       </select>
-      <button className="train-btn" onClick={()=>modelTrain()}>
+      <button className="train-btn" onClick={() => modelTrain()}>
         Model Train
       </button>
+      <br />
+      <div className="predict-section">
+        <div className="feature-container">
+          Features:
+          {features.map((item, index) => (
+            <div className="feature-flex" key={index}>
+              <input className="input-feature" type="text" placeholder={item} />
+            </div>
+          ))}
+        </div>
+        <button className="predict-btn">Predict</button>
+      </div>{" "}
     </>
   );
 }

@@ -8,6 +8,7 @@ import DfUniqueData from './componets/DfUniqueData';
 import SelectFeatureTarget from './componets/SelectFeatureTarget';
 import TrainTestSplit from './componets/TrainTestSplit';
 import MLAlgo from './componets/MLAlog';
+import Predict from './componets/Predict';
 
 function App() {
 
@@ -79,6 +80,10 @@ function App() {
       <div className='section E'>
         <MLAlgo />
       </div>
+
+      {/* <div className='section F'>
+        <Predict />
+      </div> */}
 
     </div>
   );

@@ -4,7 +4,44 @@
     padding: 10px;
 }
 
+.input-feature{
+    padding: 5px;
+    border: none;
+    margin: 3px;
+}
 
+.predict-section {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .feature-container {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px; /* Adjust the margin as needed */
+  }
+  
+  .feature-flex {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px; /* Adjust the margin as needed */
+  }
+
+  .predict-btn{
+    border: none;
+    padding: 10px;
+    width: 100px;
+    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    background-color: rgb(133, 254, 126);
+    margin-bottom: 10px;
+} 
 
 .train-btn{
     border: none;
