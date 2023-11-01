@@ -2,9 +2,11 @@ import { useState } from "react";
 import "../css/TrainTestSplit.css";
 
 function TrainTestSplit() {
-  const [randomstate, setRandomState] = useState([]);
-  const [shuffle, setshuffle] = useState([]);
-  const [trainsize, setTrainSize] = useState([]);
+  const [randomstate, setRandomState] = useState(42);
+  const [success, setSuccess] = useState(false);
+  const [message, setMessage] = useState(true);
+  const [shuffle, setshuffle] = useState(false);
+  const [trainsize, setTrainSize] = useState(80);
   const [trainshape, setTrainShape] = useState([]);
   const [testshape, setTestShape] = useState([]);
 
@@ -30,6 +32,8 @@ function TrainTestSplit() {
         const jsonResponse = await response.json();
         setTrainShape(jsonResponse.trainshape);
         setTestShape(jsonResponse.testshape);
+        setSuccess(jsonResponse.success);
+        setMessage(jsonResponse.message);
         console.log("Data updated successfully:", jsonResponse);
       } else {
         // Request failed
@@ -59,7 +63,8 @@ function TrainTestSplit() {
   return (
     <>
       <h4>Train Test Split</h4>
-      <div className="train-test-split-field-tts">
+      {!success && message}
+     <div className="train-test-split-field-tts">
         <input
           className="input-field-tts"
           placeholder="random state"
