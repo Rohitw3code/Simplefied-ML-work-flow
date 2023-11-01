@@ -10,6 +10,17 @@
     margin: 3px;
 }
 
+.paramsKey{
+  display: block;
+  columns: 4;
+  width: 100%; /* Set the desired width */
+  padding: 10px; /* Add padding as needed */
+  border: 1px solid #ccc; /* Add borders as needed */
+  border-radius: 5px; /* Add border radius for rounded corners */
+  background-color: #f5f5f5; /* Set the background color */
+  margin: 10px 0; /* Add margin to control spacing */
+}
+
 .predict-section {
     display: flex;
     align-items: flex-start;

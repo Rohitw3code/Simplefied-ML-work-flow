@@ -12,6 +12,8 @@ function MLAlgo() {
   const [inputValues, setInputValues] = useState([]);
   const [predict, setPredict] = useState();
   const [predicted, setPredicted] = useState(false);
+  const [params, setParams] = useState({});
+  const [paramsKey, setParamsKey] = useState([]);
 
   const fetchRegressionAlog = async () => {
     try {
@@ -40,6 +42,41 @@ function MLAlgo() {
       updatedValues[index] = newValue;
       return updatedValues;
     });
+  };
+
+  const fetchModelParams = async () => {
+    const url = "http://127.0.0.1:5001/api/model-params";
+    const data = {
+      algoType: algoType,
+      algo: selectAlgo,
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        if (jsonResponse.success) {
+          setParams(jsonResponse.params);
+          setParamsKey(jsonResponse.params_key);
+          console.log("Data updated successfully:", jsonResponse);
+        }
+      } else {
+        console.error(
+          "Failed to update data:",
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const predictFun = async () => {
@@ -108,6 +145,7 @@ function MLAlgo() {
 
   const setSelectedAlgorithm = (e) => {
     setSelectAlgo(e.target.value);
+    fetchModelParams();
   };
 
   useEffect(() => {
@@ -158,6 +196,18 @@ function MLAlgo() {
         Model Train
       </button>
       <br />
+
+      <div className="paramsKey">
+        {paramsKey.map((item, index) => (
+          <div key={index}>
+            <input
+              className="input-feature"
+              placeholder={item}
+              value={params[item] || "None"}
+            />
+          </div>
+        ))}
+      </div>
 
       <div className="predict-section">
         <div className="feature-container">
