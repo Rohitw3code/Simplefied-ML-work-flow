@@ -7,6 +7,7 @@ function MLAlgo() {
   const [selectAlgo, setSelectAlgo] = useState("Logistic Regression");
   const [algoType, setAlgoType] = useState("classification");
   const [classification, setClassification] = useState([]);
+  const [accuracy, setAccuracy] = useState(false);
   const [loading, setLoading] = useState(true); // Add loading state
   const [error, setError] = useState(null); // Add error state0
   const [inputValues, setInputValues] = useState([]);
@@ -14,6 +15,7 @@ function MLAlgo() {
   const [predicted, setPredicted] = useState(false);
   const [params, setParams] = useState({});
   const [paramsKey, setParamsKey] = useState([]);
+  const [showParams, setShowParams] = useState(true);
 
   const fetchRegressionAlog = async () => {
     try {
@@ -130,6 +132,7 @@ function MLAlgo() {
       if (response.ok) {
         const jsonResponse = await response.json();
         setFeatures(jsonResponse.features);
+        setAccuracy(jsonResponse.accuracy);
         console.log("Data updated successfully:", jsonResponse);
       } else {
         console.error(
@@ -192,26 +195,37 @@ function MLAlgo() {
           </>
         )}
       </select>
+      <br />
+      {showParams && (
+        <>
+          <div className="paramsKey">
+            {paramsKey.map((item, index) => (
+              <div className="param-field" key={index}>
+                {item}
+                <input
+                  className="input-feature"
+                  placeholder={item}
+                  value={params[item] || "None"}
+                />
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
       <button className="train-btn" onClick={() => modelTrain()}>
         Model Train
       </button>
+
       <br />
 
-      <div className="paramsKey">
-        {paramsKey.map((item, index) => (
-          <div key={index}>
-            <input
-              className="input-feature"
-              placeholder={item}
-              value={params[item] || "None"}
-            />
-          </div>
-        ))}
-      </div>
+      <h3>{accuracy && <>Accuracy : {accuracy}</>}</h3>
+
+      <br />
 
       <div className="predict-section">
         <div className="feature-container">
-          Features:
+          <h3>Features:</h3>
           {features.map((item, index) => (
             <div className="feature-flex" key={index}>
               <input
