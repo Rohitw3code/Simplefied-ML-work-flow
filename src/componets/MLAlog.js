@@ -3,16 +3,15 @@ import "../css/MLAlgo.css";
 
 function MLAlgo() {
   const [features, setFeatures] = useState([]);
-  const [target, setTarget] = useState("");
   const [regression, setRegression] = useState([]);
-  const [selectAlgo, setSelectAlgo] = useState("Linear Regression");
-  const [algoType, setAlgoType] = useState("regression");
+  const [selectAlgo, setSelectAlgo] = useState("Logistic Regression");
+  const [algoType, setAlgoType] = useState("classification");
   const [classification, setClassification] = useState([]);
   const [loading, setLoading] = useState(true); // Add loading state
   const [error, setError] = useState(null); // Add error state0
   const [inputValues, setInputValues] = useState([]);
-  const [predict,setPredict] = useState();
-  const featuresField = ["Feature 1", "Feature 2", "Feature 3"]; // Replace with your feature names
+  const [predict, setPredict] = useState();
+  const [predicted, setPredicted] = useState(false);
 
   const fetchRegressionAlog = async () => {
     try {
@@ -34,7 +33,6 @@ function MLAlgo() {
     }
   };
 
-
   const handleInputChange = (event, index) => {
     const newValue = event.target.value;
     setInputValues((prevValues) => {
@@ -44,10 +42,10 @@ function MLAlgo() {
     });
   };
 
-  const predictFun = async() => {
+  const predictFun = async () => {
     const url = "http://127.0.0.1:5001/api/mode-predict";
     const data = {
-      featureValue:inputValues
+      featureValue: inputValues,
     };
 
     try {
@@ -62,6 +60,7 @@ function MLAlgo() {
       if (response.ok) {
         const jsonResponse = await response.json();
         setPredict(jsonResponse.predict);
+        setPredicted(true);
         console.log("Data updated successfully:", jsonResponse);
       } else {
         console.error(
@@ -94,7 +93,6 @@ function MLAlgo() {
       if (response.ok) {
         const jsonResponse = await response.json();
         setFeatures(jsonResponse.features);
-        setTarget(jsonResponse.target);
         console.log("Data updated successfully:", jsonResponse);
       } else {
         console.error(
@@ -185,7 +183,7 @@ function MLAlgo() {
           Predict
         </button>
       </div>
-      Prediction Value : {predict}
+      {predicted && <>Prediction Value : {predict}</>}
     </>
   );
 }
