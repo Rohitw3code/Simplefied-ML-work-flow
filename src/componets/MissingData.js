@@ -34,17 +34,14 @@ function MissingData() {
         }
     };
 
-    const post = async (key, value, replace) => {
+    const post = async (key, value, replace='nan') => {
         const url = 'http://127.0.0.1:5001/api/df/missingdata/operation'; // Replace with your API endpoint URL
         // Data to be sent in the request body
         const data = {
             key: key,
             operation: value,
+            replace:replace
         };
-
-        if (replace !== 'nan') {
-            data.replace = replace;
-        }
 
         try {
             const response = await fetch(url, {
@@ -56,14 +53,12 @@ function MissingData() {
             });
 
             if (response.ok) {
-                // Request was successful
                 const jsonResponse = await response.json();
                 if (jsonResponse.updated) {
                     setUpdatedDs(jsonResponse);
                 }
                 console.log('Data updated successfully:', jsonResponse);
             } else {
-                // Request failed
                 console.error('Failed to update data:', response.status, response.statusText);
             }
         } catch (error) {
@@ -78,11 +73,11 @@ function MissingData() {
 
 
     if (loading) {
-        return <div>Loading...</div>; // Show a loading message while fetching data
+        return <div>Loading...</div>; 
     }
 
     if (error) {
-        return <div>Error: {error}</div>; // Show an error message if there was an error
+        return <div>Error: {error}</div>; 
     }
 
     const handleButtonClick = (key, dtype) => {

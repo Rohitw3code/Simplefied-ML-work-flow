@@ -205,7 +205,7 @@ function MLAlgo() {
                 <input
                   className="input-feature"
                   placeholder={item}
-                  value={params[item] || "None"}
+                  value={params[item]}
                 />
               </div>
             ))}

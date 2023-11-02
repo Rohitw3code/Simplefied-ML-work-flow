@@ -2,6 +2,7 @@ import "../css/DataEncoding.css";
 import React, { useEffect, useState } from "react";
 import Dataframe from "./Dataframe";
 import DfUniqueData from "./DfUniqueData";
+import Unique from "./Unique";
 
 function DataEncoding() {
   const [data, setData] = useState({});
@@ -131,6 +132,9 @@ function DataEncoding() {
       >
         <h3>Unique data in the dataframe</h3>
         <DfUniqueData />
+
+        <Unique />
+        
         <h4>Select the Category columns</h4>
         {columns.map((item, index) => (
           <button
