@@ -48,7 +48,7 @@ function App() {
   return (
     <div className="bg-slate-900 text-white">
       <h1 className="text-2xl text-white p-5 font-semibold">
-        Data Preprocessing{" "}
+        Data Preprocessing
       </h1>
 
       <div className="m-5">
@@ -80,7 +80,7 @@ function App() {
       </div>
 
       <div className="section D">
-        <button className="section-btn" onClick={sectionBVisibleFun}>
+        <button className="text-2xl text-white p-5 font-semibold" onClick={sectionBVisibleFun}>
           Data Encoding
         </button>
         <DataEncoding />

@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 function DfUniqueData() {
     const [data, setData] = useState({});
     const [shape, setShape] = useState({});
-    const [loading, setLoading] = useState(true); // Add loading state
-    const [error, setError] = useState(null); // Add error state
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null); 
     useEffect(() => {
         fetchData();
     }, []);
@@ -32,13 +32,13 @@ function DfUniqueData() {
 
     return (
         <div className='section'>
-            <div className='shape-dud'>Total no. of Rows : {shape[0]}</div>
-            <div className='shape-dud'>Total no. of Columns : {shape[1]}</div>
-            <div className="horizontal-table">
+            <div className='mx-3 p-2'>Total no. of Rows : {shape[0]}</div>
+            <div className='mx-3 p-2'>Total no. of Columns : {shape[1]}</div>
+            <div className="flex mx-5">
                 {Object.keys(data).map((key) => (
-                    <div key={key} className="table-row">
-                        <div className="table-cell key">{key} </div>
-                        <div className="table-cell value">{data[key]}</div>
+                    <div key={key}>
+                        <div className="text-white bg-blue-900  p-2">{key}</div>
+                        <div className="text-white bg-slate-800 p-2">{data[key]}</div>
                     </div>
                 ))}
             </div>

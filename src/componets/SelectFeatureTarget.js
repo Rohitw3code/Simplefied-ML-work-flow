@@ -34,7 +34,7 @@ function SelectFeatureTarget() {
         if (jsonData.update) {
           setUpdate(true);
           setTargetfeature(col);
-          updateFeature(selectedFeatures,targetfeature);
+          updateFeature(selectedFeatures, targetfeature);
         }
       }
     } catch (error) {
@@ -42,19 +42,19 @@ function SelectFeatureTarget() {
     }
   };
 
-  const updateFeature = async (sf,tf) =>{
+  const updateFeature = async (sf, tf) => {
     const url = "http://127.0.0.1:5001/api/feature-target";
     const payload = {
       feature: sf,
-      target:tf
+      target: tf,
     };
     try {
       const response = await fetch(url, {
-        method: "POST", 
+        method: "POST",
         headers: {
-          "Content-Type": "application/json", 
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload), 
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
@@ -70,7 +70,7 @@ function SelectFeatureTarget() {
     } catch (error) {
       console.error("Error:", error);
     }
-  }
+  };
 
   const addinfeature = (col) => {
     const newSelectedColumns = [...selectedFeatures]; // Create a copy of the array
@@ -87,7 +87,7 @@ function SelectFeatureTarget() {
 
   return (
     <div>
-      <h2>Features:</h2>
+      <h2 className="text-lg text-white mx-2 my-3 font-semibold">Features:</h2>
       {columns.map((column, index) => (
         <>
           {column === targetfeature ? (
@@ -95,8 +95,10 @@ function SelectFeatureTarget() {
           ) : (
             <>
               <button
-                className={`train-feature-btn-st ${
-                  selectedFeatures.includes(column) ? "selected-feature" : ""
+                className={`p-2 m-1 rounded-sm hover:bg-teal-700 ${
+                  selectedFeatures.includes(column)
+                    ? "bg-red-600"
+                    : "bg-violet-900"
                 }`}
                 onClick={() => {
                   addinfeature(column);
@@ -109,11 +111,11 @@ function SelectFeatureTarget() {
         </>
       ))}
 
-      <h2>Target:</h2>
+      <h2 className="text-lg text-white mx-2 my-3 font-semibold ">Target:</h2>
       {columns.map((column, index) => (
         <button
-          className={`target-feature-btn-st ${
-            targetfeature === column ? "selected-target" : ""
+          className={`p-2 m-1 rounded-sm hover:bg-teal-700 ${
+            targetfeature === column ? "bg-red-600" : "bg-violet-900"
           }`}
           onClick={() => {
             setTarget(column);
@@ -125,7 +127,9 @@ function SelectFeatureTarget() {
       ))}
       {update && (
         <>
-          <h3>{targetfeature}</h3>
+          <h3 className="text-lg text-white mx-3 my-3 font-semibold">
+            {targetfeature}
+          </h3>
         </>
       )}
 
@@ -136,7 +140,9 @@ function SelectFeatureTarget() {
               ""
             ) : (
               <>
-              <div className="feature-title-x">Train Feature (X)</div>
+                <div className="text-green-500 font-mono mx-2">
+                  Train Feature (X)
+                </div>
                 <Dataframe rows={3} cols={selectedFeatures} />
               </>
             )}
@@ -146,7 +152,7 @@ function SelectFeatureTarget() {
               ""
             ) : (
               <>
-              <div className="feature-title-y">Target (Y)</div>
+                <div className="text-red-500 font-mono">Target (Y)</div>
                 <Dataframe rows={3} cols={[targetfeature]} />
               </>
             )}

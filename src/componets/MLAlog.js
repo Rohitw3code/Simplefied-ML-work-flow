@@ -146,6 +146,12 @@ function MLAlgo() {
     }
   };
 
+  function snakeToCamel(str) {
+    return str.replace(/([-_][a-z])/g, (group) =>
+      group.toUpperCase().replace("-", "").replace("_", "")
+    );
+  }
+
   const setSelectedAlgorithm = (e) => {
     setSelectAlgo(e.target.value);
     fetchModelParams();
@@ -157,21 +163,29 @@ function MLAlgo() {
 
   return (
     <>
-      <h3>Choose the ML Alogorithm for the ML training</h3>
-      <h3>Model Type</h3>
+      <h3 className="text-lg text-white mx-2 my-3 font-semibold">
+        Choose the ML Alogorithm for the ML training
+      </h3>
+      <h3 className="text-lg text-white mx-2 my-3 font-semibold">Model Type</h3>
       <select
-        className="select-algo-type-mlalgo"
+        className="bg-slate-800 p-2 m-2"
         value={algoType || "regression"}
         onChange={(e) => {
           setAlgoType(e.target.value);
         }}
       >
-        <option value="regression">Regression</option>
-        <option value="classification">Classification</option>
+        <option className="bg-slate-900" value="regression">
+          Regression
+        </option>
+        <option className="bg-slate-900" value="classification">
+          Classification
+        </option>
       </select>
-      <h3>Choose Alogorithm for Model Training</h3>
+      <h3 className="text-lg text-white mx-2 my-3 font-semibold">
+        Choose Alogorithm for Model Training
+      </h3>
       <select
-        className="select-algo-type-mlalgo"
+        className="bg-slate-800 p-2 m-2"
         value={selectAlgo || regression[0]}
         onChange={(e) => {
           setSelectedAlgorithm(e);
@@ -180,7 +194,7 @@ function MLAlgo() {
         {algoType === "regression" ? (
           <>
             {regression.map((algo, index) => (
-              <option key={index} value={algo}>
+              <option className="bg-slate-900" key={index} value={algo}>
                 {algo}
               </option>
             ))}
@@ -188,7 +202,7 @@ function MLAlgo() {
         ) : (
           <>
             {classification.map((algo, index) => (
-              <option key={index} value={algo}>
+              <option className="bg-slate-900" key={index} value={algo}>
                 {algo}
               </option>
             ))}
@@ -198,13 +212,13 @@ function MLAlgo() {
       <br />
       {showParams && (
         <>
-          <div className="paramsKey">
+          <div className="block columns-4 mx-2">
             {paramsKey.map((item, index) => (
-              <div className="param-field" key={index}>
-                {item}
+              <div className="p-1" key={index}>
+                <div>{snakeToCamel(item)}</div>
                 <input
-                  className="input-feature"
-                  placeholder={item}
+                  className="w-20 h-7 bg-slate-800 text-white p-1 rounded-lg"
+                  placeholder={snakeToCamel(item)}
                   value={params[item]}
                 />
               </div>
@@ -213,33 +227,42 @@ function MLAlgo() {
         </>
       )}
 
-      <button className="train-btn" onClick={() => modelTrain()}>
+      <button
+        className="p-2 bg-slate-800 mx-2 rounded-sm my-5"
+        onClick={() => modelTrain()}
+      >
         Model Train
       </button>
 
       <br />
 
-      <h3>{accuracy && <>Accuracy : {accuracy}</>}</h3>
+      <h3 className="text-lg text-white mx-2 my-3 font-semibold">
+        {accuracy && <>Accuracy : {accuracy}</>}
+      </h3>
 
       <br />
 
-      <div className="predict-section">
-        <div className="feature-container">
-          <h3>Features:</h3>
-          {features.map((item, index) => (
-            <div className="feature-flex" key={index}>
-              <input
-                className="input-feature"
-                type="number"
-                placeholder={item}
-                value={inputValues[index] || ""}
-                onChange={(event) => handleInputChange(event, index)}
-              />
-            </div>
-          ))}
+      <div>
+        <div>
+          <h3 className="text-lg text-white mx-2 my-3 font-semibold">
+            Features:
+          </h3>
+          <div className="block columns-5 m-3">
+            {features.map((item, index) => (
+              <div key={index}>
+                <input
+                  className="w-20 h-10 text-white p-2 rounded-lg bg-slate-800"
+                  type="number"
+                  placeholder={snakeToCamel(item)}
+                  value={inputValues[index] || ""}
+                  onChange={(event) => handleInputChange(event, index)}
+                />
+              </div>
+            ))}
+          </div>
         </div>
         <button
-          className="predict-btn"
+          className="w-20 h-15 p-3 mx-4 my-5 bg-red-600 rounded-md"
           onClick={() => {
             predictFun();
           }}
@@ -247,7 +270,9 @@ function MLAlgo() {
           Predict
         </button>
       </div>
+      <div className="p-5 text-2xl">
       {predicted && <>Prediction Value : {predict}</>}
+      </div>
     </>
   );
 }

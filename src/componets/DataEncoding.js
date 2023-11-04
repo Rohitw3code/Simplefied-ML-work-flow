@@ -130,15 +130,19 @@ function DataEncoding() {
           fetchData();
         }}
       >
-        <h3>Unique data in the dataframe</h3>
+        <h3 className="text-lg text-white mx-3 font-semibold">
+          Unique data in the dataframe
+        </h3>
+
         <DfUniqueData />
 
-        <Unique />
+        {/* <Unique /> */}
+
+        <h4 className="text-lg text-white font-semibold my-3">Select the Category columns</h4>
         
-        <h4>Select the Category columns</h4>
         {columns.map((item, index) => (
           <button
-            className="choose-column-de-btn"
+            className="bg-blue-900 m-1 rounded-sm p-2 hover:bg-orange-500"
             key={index}
             onClick={() => {
               fetchColumnData(item);
@@ -147,14 +151,15 @@ function DataEncoding() {
             {item}
           </button>
         ))}
-        <h4>Selected Columns:</h4>
+
+        <h4 className="text-lg text-white my-3 font-semibold">Selected Columns:</h4>
         {selectedColumns.length > 0 ? (
           ""
         ) : (
           <h5>NO Categorical Feature is Selected</h5>
         )}
         {selectedColumns.map((col, index) => (
-          <button className="selected-column-btn-de" key={index}>
+          <button className="bg-slate-950 mx-1 p-2 my-1 hover:bg-slate-800" key={index}>
             {col}
             <label
               className="remove-cat-cols-de"
@@ -173,7 +178,7 @@ function DataEncoding() {
           {selectedColumns.length > 0 ? (
             <>
               <button
-                className="encode-btn-de"
+                className="bg-violet-900 rounded-md mx-3 my-3 p-3"
                 onClick={() => {
                   encodeDF();
                 }}
@@ -187,7 +192,7 @@ function DataEncoding() {
 
           {showDataframe && (
             <>
-              <h4>Encoded Data</h4>
+              <h4 className="text-lg text-white mx-3 my-3 font-semibold">Encoded Data</h4>
               <Dataframe rows={3} cols={encodedDataCols} />
             </>
           )}
