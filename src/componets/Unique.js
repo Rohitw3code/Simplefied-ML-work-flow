@@ -10,22 +10,21 @@ function Unique (){
         fetchUnique();
     }, []);
 
-    const fetchUnique=async()=>{
-        try {
-            const resp = await fetch(`http://127.0.0.1:5001/api/unique-values`);
-            if (resp.ok) {
-              const jsonData = await resp.json();
-              setUni(jsonData.unique_value);
-              setKeys(jsonData.keys);
-              setLoading(false);
-            } else {
-              setError("Failed to fetch data");
-              setLoading(false); // Set loading to false in case of an error
-            }
-          } catch (error) {
-            setError("Error: " + error.message);
+    const fetchUnique= async () => {
+      try {
+        const resp = await fetch(`http://127.0.0.1:5001/api/dataunique`);
+        if (resp.ok) {
+            const jsonData = await resp.json();
+            setLoading(false); // Set loading to false after data is fetched
+        } else {
+            setError("Failed to fetch data");
             setLoading(false); // Set loading to false in case of an error
-          }      
+        }
+    } catch (error) {
+        setError("Error: " + error.message);
+        setLoading(false); // Set loading to false in case of an error
+    }
+
     }
 
 

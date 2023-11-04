@@ -1,7 +1,7 @@
 import '../css/DataTypeChange.css'
 import React, { useEffect, useState } from 'react';
 
-function DataTypeChange() {
+function DataTypeChange({ reloadDataTypeChange }) {
     const [dtypes, setDtypes] = useState({});
     const [columnDataTypes, setColumnDataTypes] = useState({}); 
     const [isSuccessful,setIsSuccessful] = useState(true);
@@ -64,7 +64,7 @@ function DataTypeChange() {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [reloadDataTypeChange]);
 
     const handleDataTypeChange = (column, dataType) => {
         setColumnDataTypes({

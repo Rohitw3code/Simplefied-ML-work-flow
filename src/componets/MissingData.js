@@ -1,7 +1,7 @@
 import '../css/MissingData.css'
 import React, { useEffect, useState } from 'react';
 
-function MissingData() {
+function MissingData({ triggerReloadDataTypeChange}) {
     const [data, setData] = useState({});
     const [dtypes, setDtypes] = useState({});
     const [loading, setLoading] = useState(true); // Add loading state
@@ -56,6 +56,7 @@ function MissingData() {
                 const jsonResponse = await response.json();
                 if (jsonResponse.updated) {
                     setUpdatedDs(jsonResponse);
+                    triggerReloadDataTypeChange();
                 }
                 console.log('Data updated successfully:', jsonResponse);
             } else {

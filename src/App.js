@@ -15,6 +15,14 @@ function App() {
   const [cols,setCols] = useState([]);
   const [sectionBVisible, setSectionBVisible] = useState(false);
 
+  const [reloadDataTypeChange, setReloadDataTypeChange] = useState(false);
+
+
+  const triggerReloadDataTypeChange = () => {
+    setReloadDataTypeChange(prevReloadDataTypeChange => !prevReloadDataTypeChange);
+  }
+  
+
   const fetchData = async () => {
     try {
       const url = `http://127.0.0.1:5001/api/dfcols`;
@@ -30,11 +38,6 @@ function App() {
   useEffect(() => {
     fetchData();
   },[]);
-
-
-
-
-
 
   const sectionBVisibleFun = () => {
     setSectionBVisible(true);
@@ -56,11 +59,11 @@ function App() {
       
       <div className='section B'>
         <button className='section-btn' onClick={sectionBVisibleFun}>Missing Value</button>
-        <MissingData />
+        <MissingData triggerReloadDataTypeChange={triggerReloadDataTypeChange} />
       </div>
       
       <div className='section C'>
-        <DataTypeChange />
+        <DataTypeChange reloadDataTypeChange={reloadDataTypeChange} />
       </div>
 
       <div className='section D'>
