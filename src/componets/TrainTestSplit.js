@@ -115,14 +115,14 @@ function TrainTestSplit() {
             ""
           ) : (
             <>
-              <p>No. of rows in Train {trainshape[0]}</p>
+              <p className="py-4">No. of rows in Train {trainshape[0]}</p>
             </>
           )}
           {testshape.length === 0 ? (
             ""
           ) : (
             <>
-              <p>No. of rows in Test {testshape[0]}</p>
+              <p className="py-4">No. of rows in Test {testshape[0]}</p>
             </>
           )}
         </div>

@@ -163,6 +163,8 @@ function MLAlgo() {
 
   return (
     <>
+    <div className="bg-slate-950 p-5 rounded-sm">
+
       <h3 className="text-lg text-white mx-2 my-3 font-semibold">
         Choose the ML Alogorithm for the ML training
       </h3>
@@ -181,6 +183,7 @@ function MLAlgo() {
           Classification
         </option>
       </select>
+
       <h3 className="text-lg text-white mx-2 my-3 font-semibold">
         Choose Alogorithm for Model Training
       </h3>
@@ -227,6 +230,9 @@ function MLAlgo() {
         </>
       )}
 
+</div>
+
+
       <button
         className="p-2 bg-slate-800 mx-2 rounded-sm my-5"
         onClick={() => modelTrain()}
@@ -271,7 +277,7 @@ function MLAlgo() {
         </button>
       </div>
       <div className="p-5 text-2xl">
-      {predicted && <>Prediction Value : {predict}</>}
+        {predicted && <>Prediction Value : {predict}</>}
       </div>
     </>
   );
