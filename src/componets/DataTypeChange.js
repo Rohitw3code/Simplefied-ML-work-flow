@@ -1,4 +1,4 @@
-import '../css/DataTypeChange.css'
+// import '../css/DataTypeChange.css'
 import React, { useEffect, useState } from 'react';
 
 function DataTypeChange({ reloadDataTypeChange }) {
@@ -76,27 +76,27 @@ function DataTypeChange({ reloadDataTypeChange }) {
 
     return (
         <>
-            <h3>Data type casting</h3>
-            <div className="horizontal-table">
+            <h3 className='text-2xl text-white p-5 font-semibold'>Data type casting</h3>
+            <div className="flex mx-5">
                 <div>
-                    <div className="table-cell key-dtc cell-column">Columns</div>
-                    <div className="table-cell key-dtc cell-column">Data Types</div>
+                    <div className="bg-slate-700 p-2 mx-1 my-1 rounded-sm">Columns</div>
+                    <div className="bg-slate-700 p-2 mx-1 my-1 rounded-sm">Data Types</div>
                 </div>
                 {Object.keys(dtypes).map((key) => (
                     <div key={key}>
-                        <div className="table-cell key-dtc">{key}</div>
-                        <div className="table-cell value-dtc">
-                            <select className='select-dtc'
+                        <div className="bg-slate-700 my-1 p-2 ">{key}</div><br/>
+                        <div>
+                            <select className='bg-inherit my-0'
                                 value={columnDataTypes[key] || 'default'}
                                 onChange={(e) => handleDataTypeChange(key, e.target.value)}
                             >
-                                <option value="default" disabled>
+                                <option className='bg-slate-900 ' value="default" disabled>
                                    {dtypes[key]}
                                 </option>
-                                <option value="int">int</option>
-                                <option value="boolean">boolean</option>
-                                <option value="float">float</option>
-                                <option value="object">object</option>
+                                <option className='bg-slate-900 ' value="int">int</option>
+                                <option className='bg-slate-900 ' value="boolean">boolean</option>
+                                <option className='bg-slate-900 ' value="float">float</option>
+                                <option className='bg-slate-900 ' value="object">object</option>
                             </select>
                         </div>
                     </div>

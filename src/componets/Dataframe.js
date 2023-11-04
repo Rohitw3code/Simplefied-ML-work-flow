@@ -9,15 +9,14 @@ function Dataframe(props) {
 
   useEffect(() => {
     fetchData();
-  },[props.cols]);
+  }, [props.cols]);
 
   const fetchData = async () => {
     try {
       const queryParams = new URLSearchParams();
-      if(props.cols){
+      if (props.cols) {
         queryParams.append("cols", props.cols.join(","));
-      }
-      else{
+      } else {
         queryParams.append("cols", [].join(","));
       }
 
@@ -29,19 +28,19 @@ function Dataframe(props) {
         const jsonData = await resp.json();
         setData(jsonData.data);
         setShape(jsonData.shape);
-        setLoading(false); 
+        setLoading(false);
       } else {
         setError("Failed to fetch data");
-        setLoading(false); 
+        setLoading(false);
       }
     } catch (error) {
       setError("Error: " + error.message);
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   if (error) {
@@ -51,31 +50,45 @@ function Dataframe(props) {
   const buttonArray = Array.from({ length: props.rows }, (_, index) => index);
 
   return (
-    <div className="section">
+    <div className="p-2">
       {props.shapeDisplay ? (
-        <div className="tags">
-          <button className="tag">Row {shape[0]}</button>
-          <button className="tag">Column {shape[1]}</button>
-          <button className="tag">
+        <div className="flex font-mono">
+          <div className="text-white bg-blue-900 p-2 rounded my-3 mx-1">
+            Row {shape[0]}
+          </div>
+          <div className="text-white bg-blue-900 p-2 rounded my-3 mx-1">
+            Column {shape[1]}
+          </div>
+          <div className="text-white bg-blue-900 p-2 rounded my-3 mx-1">
             Shape {shape[0]} x {shape[1]}
-          </button>
+          </div>
         </div>
       ) : null}
       <table>
         <thead>
           <tr>
             {Object.keys(data).map((key, index) => (
-              <th key={index}>{key}</th>
+              <th
+                className="text-white bg-blue-900 font-thin  p-2 border-0 "
+                key={index}
+              >
+                {key}
+              </th>
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="bg-red-900">
           {buttonArray.map((index) => (
             <tr>
               {Object.values(data).map((values, idx) =>
                 values.length > 0 ? (
                   <>
-                    <td key={idx}>{values[index]}</td>
+                    <td
+                      className="bg-blue-950 text-white font-mono border-0"
+                      key={idx}
+                    >
+                      {values[index]}
+                    </td>
                   </>
                 ) : null
               )}
@@ -84,9 +97,11 @@ function Dataframe(props) {
         </tbody>
       </table>
       {props.shapeDisplay ? (
-        <button className="shape">
-          Shape {props.rows} x {shape[1]}
-        </button>
+        <div className="flex">
+          <div className="text-white p-2 rounded my-3 font-mono bg-cyan-900">
+            Shape {props.rows} x {shape[1]}
+          </div>
+        </div>
       ) : null}
     </div>
   );
