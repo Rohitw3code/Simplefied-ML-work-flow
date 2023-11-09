@@ -8,12 +8,14 @@ import DfUniqueData from "./componets/DfUniqueData";
 import SelectFeatureTarget from "./componets/SelectFeatureTarget";
 import TrainTestSplit from "./componets/TrainTestSplit";
 import MLAlgo from "./componets/MLAlog";
+import Welcome from "./componets/Welcome";
 
 function App() {
   const [userInput, setUserInput] = useState(1);
   const [cols, setCols] = useState([]);
   const [sectionBVisible, setSectionBVisible] = useState(false);
   const [reloadDataTypeChange, setReloadDataTypeChange] = useState(false);
+  const [showWelcome,setShowWelcome] = useState(true);
 
 
   const triggerReloadDataTypeChange = () => {
@@ -46,7 +48,14 @@ function App() {
   };
 
   return (
-    <div className="bg-slate-900 text-white">
+    <>
+    {showWelcome ? (
+<>
+<Welcome />
+</>
+    ):(
+<>
+<div className="bg-slate-900 text-white">
       <h1 className="text-2xl text-white p-5 font-semibold">
         Data Preprocessing
       </h1>
@@ -98,6 +107,11 @@ function App() {
         <MLAlgo />
       </div>
     </div>
+
+</>      
+    )}
+    
+    </>
   );
 }
 
