@@ -64,6 +64,7 @@ function App() {
     ):(
 <>
 <div className="bg-slate-900 text-white">
+  <h1 className="p-10 flex items-center justify-center text-4xl">MLQuickFlow</h1>
       <h1 className="text-2xl text-white p-5 font-semibold">
         Data Preprocessing
       </h1>
