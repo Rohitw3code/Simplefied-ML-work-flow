@@ -16,10 +16,18 @@ function App() {
   const [sectionBVisible, setSectionBVisible] = useState(false);
   const [reloadDataTypeChange, setReloadDataTypeChange] = useState(false);
   const [showWelcome,setShowWelcome] = useState(true);
+  // const [selectedFile, setSelectedFile] = useState({"name":"No Selected"});
+
 
 
   const triggerReloadDataTypeChange = () => {
     setReloadDataTypeChange(
+      (prevReloadDataTypeChange) => !prevReloadDataTypeChange
+    );
+  };
+
+  const triggerReloadSelectedFile = () => {
+    setShowWelcome(
       (prevReloadDataTypeChange) => !prevReloadDataTypeChange
     );
   };
@@ -51,7 +59,7 @@ function App() {
     <>
     {showWelcome ? (
 <>
-<Welcome />
+<Welcome triggerReloadSelectedFile={triggerReloadSelectedFile}/>
 </>
     ):(
 <>

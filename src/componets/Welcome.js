@@ -1,15 +1,33 @@
 import React, { useState } from "react";
 import "../css/Welcome.css";
-import img1 from "../images/neuron.png";
-import tran from "../images/tran.jpg"
 
-
-function Welcome() {
-  const [selectedFile, setSelectedFile] = useState(null);
+function Welcome({triggerReloadSelectedFile}) {
+  const [selectedFile, setSelectedFile] = useState({"name":"No Selected"});
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
+  };
+
+  const loadData = async () => {
+    try {
+      const resp = await fetch(
+        `http://127.0.0.1:5001/api/load-dataset/${selectedFile.name}`
+      );
+      if(resp.ok){
+        const jsonData = await resp.json();
+        if(jsonData.success){
+          triggerReloadSelectedFile(true);
+        }
+        else{
+          triggerReloadSelectedFile(false)
+        }
+
+      }
+      
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   return (
@@ -22,8 +40,7 @@ function Welcome() {
 
         <div className="mx-auto my-3 p-6 rounded-lg shadow-md text-center relative max-w-2xl animate__animated animate__fadeIn">
           <h2 className="text-2xl font-bold mb-4 text-white">
-            Get Started with{" "}
-            <span className="animate-typing">Your Data</span>
+            Get Started with <span className="animate-typing">Your Data</span>
           </h2>
           <p className="text-gray-400 mb-4 ">
             Load your CSV dataset into our tool, handle missing data, and
@@ -48,9 +65,14 @@ function Welcome() {
             onChange={handleFileChange}
             className="border-2 border-blue-500 rounded-lg mb-4 bg-slate-800 text-white p-2 m-3"
           />
-          <button className=" font-mono text-white p-2 m-3 bg-rose-600 rounded-md animate__animated animate__fadeInUp animate__delay-1s">
+          <button
+            onClick={loadData}
+            className=" font-mono text-white p-2 m-3 bg-rose-600 rounded-md animate__animated animate__fadeInUp animate__delay-1s"
+          >
             Start
           </button>
+          <div className="text-white">
+          </div>
         </div>
       </div>
     </>
