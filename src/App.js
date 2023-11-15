@@ -115,6 +115,8 @@ function App() {
       <div className="section E">
         <MLAlgo />
       </div>
+
+      
     </div>
 
 </>      
