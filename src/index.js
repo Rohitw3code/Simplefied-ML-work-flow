@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './fonts/ClasGrotesk/ClashGrotesk-Regular.otf';
+import './fonts/Goza/Goza-vmegD.ttf'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

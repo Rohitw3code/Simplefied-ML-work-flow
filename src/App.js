@@ -9,9 +9,10 @@ import SelectFeatureTarget from "./componets/SelectFeatureTarget";
 import TrainTestSplit from "./componets/TrainTestSplit";
 import MLAlgo from "./componets/MLAlog";
 import Welcome from "./componets/Welcome";
+import ThemeContext from './componets/ThemeContext';
 
 function App() {
-  const [userInput, setUserInput] = useState(1);
+  const [userInput, setUserInput] = useState(5);
   const [cols, setCols] = useState([]);
   const [sectionBVisible, setSectionBVisible] = useState(false);
   const [reloadDataTypeChange, setReloadDataTypeChange] = useState(false);
@@ -55,7 +56,9 @@ function App() {
     setUserInput(event.target.value);
   };
 
+  const [color,setColor] = useState('#87C4FF')
   return (
+    <ThemeContext.Provider value={color}>
     <>
     {showWelcome ? (
 <>
@@ -63,31 +66,56 @@ function App() {
 </>
     ):(
 <>
-<div className="bg-slate-900 text-white">
-  <h1 className="p-10 flex items-center justify-center text-4xl">MLQuickFlow</h1>
-      <h1 className="text-2xl text-white p-5 font-semibold">
+<div className="relative" style={{ background : color}}>
+  <div className="fixed right-0 top-1/3 p-4 bg-white rounded-l-lg flex flex-col gap-2">
+      <button className=" bg-pink-500 w-8 h-8 rounded-full" onClick={() => setColor('#ED9ED6')}></button>
+      <button className=" bg-blue-500 w-8 h-8 rounded-full" onClick={() => setColor('#87C4FF')}></button>
+      <button className=" bg-teal-500 w-8 h-8 rounded-full" onClick={() => setColor('#9ADE7B')}></button>
+      <button className=" bg-yellow-500 w-8 h-8 rounded-full" onClick={() => setColor('#FFCF96')}></button>
+  </div>
+  <div className=" text-center mb-8">
+  <h1 className={`flex items-center justify-center ${color === '#ED9ED6' && 'text-pink-800'} ${color === '#87C4FF' && 'text-blue-800'}
+      ${color === '#9ADE7B' && 'text-green-800'} ${color === '#FFCF96' && 'text-yellow-800'}`} style={{ fontFamily : 'Goza',fontSize : 'clamp(5vw,4rem,2vw)'}}>MLQuickFlow</h1>
+  </div>
+  <div>
+      <h1 className={`text-2xl  p-5 font-semibold border-t-2 border-b-2 ${color === '#ED9ED6' && 'border-pink-500'} ${color === '#87C4FF' && 'border-blue-500'}
+      ${color === '#9ADE7B' && 'border-green-500'} ${color === '#FFCF96' && 'border-yellow-500'}`}
+      style={{ fontFamily : 'ClashGrotesk', fontSize : 'clamp(3vw,1.5rem,1.5vw)',}}>
         Data Preprocessing
       </h1>
 
-      <div className="m-5">
-        <div className="m-3 text-white">
+      <div className=" w-full flex flex-col items-center justify-center">
+      <div className="m-5" style={{
+         fontFamily : 'Poppins'
+      }}>
+        <div className="m-3">
+          <div className={`w-fit p-2 rounded-lg uppercase  font-semibold text-xl ${color === '#ED9ED6' && 'bg-pink-500'} ${color === '#87C4FF' && 'bg-blue-500'}
+          ${color === '#9ADE7B' && 'bg-green-500'} ${color === '#FFCF96' && 'bg-yellow-500'}`}>
           Display{" "}
           <input
-            className="w-20 p-2 border-2 mx-2 bg-blue-900 border-sky-600 h-8 rounded-lg"
+            className={` lg:w-60 outline-none p-6 border-2 mx-2 shadow-2xl h-8 rounded-lg ${color === '#ED9ED6' && 'bg-pink-300'} ${color === '#87C4FF' && 'bg-blue-300'}
+            ${color === '#9ADE7B' && 'bg-green-300'} ${color === '#FFCF96' && 'bg-yellow-300'}`}
             placeholder="Enter number of rows"
             type="number"
             value={userInput}
+            min={5}
             onChange={handleInputChange}
           />
           rows
+          </div>
         </div>
         <Dataframe rows={userInput} cols={[]} shapeDisplay="true" />
       </div>
+      </div>
+      </div>
 
-      <div className="section B">
-        <button className="text-2xl text-white p-5 font-semibold" onClick={sectionBVisibleFun}>
+      <div className="section B top-8">
+        <h1 className={`text-2xl  p-5 font-semibold border-t-2 border-b-2 ${color === '#ED9ED6' && 'border-pink-500'} ${color === '#87C4FF' && 'border-blue-500'}
+      ${color === '#9ADE7B' && 'border-green-500'} ${color === '#FFCF96' && 'border-yellow-500'}`}
+        style={{ fontFamily : 'ClashGrotesk', fontSize : 'clamp(3vw,1.5rem,1.5vw)',}} 
+        onClick={sectionBVisibleFun}>
           Missing Value
-        </button>
+        </h1>
         <MissingData
           triggerReloadDataTypeChange={triggerReloadDataTypeChange}
         />
@@ -98,9 +126,12 @@ function App() {
       </div>
 
       <div className="section D">
-        <button className="text-2xl text-white p-5 font-semibold" onClick={sectionBVisibleFun}>
+        <h1 className={`text-2xl  p-5 font-semibold border-t-2 border-b-2 ${color === '#ED9ED6' && 'border-pink-500'} ${color === '#87C4FF' && 'border-blue-500'}
+      ${color === '#9ADE7B' && 'border-green-500'} ${color === '#FFCF96' && 'border-yellow-500'}`}
+        style={{ fontFamily : 'ClashGrotesk', fontSize : 'clamp(3vw,1.5rem,1.5vw)',}}
+         onClick={sectionBVisibleFun}>
           Data Encoding
-        </button>
+        </h1>
         <DataEncoding />
       </div>
 
@@ -123,6 +154,7 @@ function App() {
     )}
     
     </>
+    </ThemeContext.Provider>
   );
 }
 

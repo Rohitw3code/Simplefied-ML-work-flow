@@ -1,8 +1,9 @@
 import "../css/DataEncoding.css";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Dataframe from "./Dataframe";
 import DfUniqueData from "./DfUniqueData";
 import Unique from "./Unique";
+import ThemeContext from "./ThemeContext";
 
 function DataEncoding() {
   const [data, setData] = useState({});
@@ -12,6 +13,7 @@ function DataEncoding() {
   const [loading, setLoading] = useState(true); // Add loading state
   const [error, setError] = useState(null); // Add error state
   const [selectedColumns, setSelectedColumns] = useState([]);
+  const color = useContext(ThemeContext)
 
   useEffect(() => {
     fetchData();
@@ -130,7 +132,7 @@ function DataEncoding() {
           fetchData();
         }}
       >
-        <h3 className="text-lg text-white mx-3 font-semibold">
+        <h3 className="text-xl mx-3 font-medium" style={{fontFamily : 'Poppins'}}>
           Unique data in the dataframe
         </h3>
 
@@ -138,11 +140,12 @@ function DataEncoding() {
 
         {/* <Unique /> */}
 
-        <h4 className="text-lg text-white font-semibold my-3">Select the Category columns</h4>
+        <h4 className="text-lg mt-4 font-medium my-3" style={{ fontFamily : 'Poppins'}}>Select the Category columns</h4>
         
         {columns.map((item, index) => (
           <button
-            className="bg-blue-900 m-1 rounded-sm p-2 hover:bg-orange-500"
+            className={` m-1 rounded-sm p-2 hover:bg-white ${color === '#ED9ED6' && 'bg-pink-500'} ${color === '#87C4FF' && 'bg-blue-500'}
+            ${color === '#9ADE7B' && 'bg-green-500'} ${color === '#FFCF96' && 'bg-yellow-500'}`}
             key={index}
             onClick={() => {
               fetchColumnData(item);
@@ -152,14 +155,16 @@ function DataEncoding() {
           </button>
         ))}
 
-        <h4 className="text-lg text-white my-3 font-semibold">Selected Columns:</h4>
+        <h4 className="text-lg my-3 font-medium"
+        style={{fontFamily : 'Poppins'}}>Selected Columns:</h4>
         {selectedColumns.length > 0 ? (
           ""
         ) : (
-          <h5>NO Categorical Feature is Selected</h5>
+          <h5 className=" text-sm" style={{ fontFamily : 'Poppins'}}>NO Categorical Feature is Selected</h5>
         )}
         {selectedColumns.map((col, index) => (
-          <button className="bg-slate-950 mx-1 p-2 my-1 hover:bg-slate-800" key={index}>
+          <button className={` text-white mx-1 p-2 my-1 hover:bg-slate-800 ${color === '#ED9ED6' && 'bg-pink-500'} ${color === '#87C4FF' && 'bg-blue-500'}
+          ${color === '#9ADE7B' && 'bg-green-500'} ${color === '#FFCF96' && 'bg-yellow-500'}`} key={index}>
             {col}
             <label
               className="remove-cat-cols-de"
@@ -178,7 +183,8 @@ function DataEncoding() {
           {selectedColumns.length > 0 ? (
             <>
               <button
-                className="bg-violet-900 rounded-md mx-3 my-3 p-3"
+                className={` rounded-md mx-3 my-3 p-3 ${color === '#ED9ED6' && 'bg-pink-500'} ${color === '#87C4FF' && 'bg-blue-500'}
+                ${color === '#9ADE7B' && 'bg-green-500'} ${color === '#FFCF96' && 'bg-yellow-500'}`}
                 onClick={() => {
                   encodeDF();
                 }}
@@ -192,7 +198,7 @@ function DataEncoding() {
 
           {showDataframe && (
             <>
-              <h4 className="text-lg text-white mx-3 my-3 font-semibold">Encoded Data</h4>
+              <h4 className="text-lg mx-3 my-3 font-semibold" style={{ fontFamily : 'Poppins'}}>Encoded Data</h4>
               <Dataframe rows={3} cols={encodedDataCols} />
             </>
           )}

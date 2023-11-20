@@ -1,5 +1,6 @@
 import "../css/Dataframe.css";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import ThemeContext from "./ThemeContext";
 
 function Dataframe(props) {
   const [data, setData] = useState([]);
@@ -7,6 +8,7 @@ function Dataframe(props) {
   const [loading, setLoading] = useState(true); // Add loading state
   const [error, setError] = useState(null); // Add error state
 
+  const color = useContext(ThemeContext);
   useEffect(() => {
     fetchData();
   }, [props.cols]);
@@ -50,26 +52,56 @@ function Dataframe(props) {
   const buttonArray = Array.from({ length: props.rows }, (_, index) => index);
 
   return (
-    <div className="p-2">
+    <div className="p-2" style={{ fontFamily : 'ClashGrotesk' }}>
       {props.shapeDisplay ? (
-        <div className="flex font-mono">
-          <div className="text-white bg-blue-900 p-2 rounded my-3 mx-1">
-            Row {shape[0]}
+        <>
+        <div className="w-5/6 flex justify-around">
+        <div className="flex justify-center">
+          <div className={`border border-gray-300 uppercase p-2 rounded my-3 mx-1 flex gap-3
+          ${color === '#ED9ED6' && 'bg-pink-500'} ${color === '#87C4FF' && 'bg-blue-500'}
+          ${color === '#9ADE7B' && 'bg-green-500'} ${color === '#FFCF96' && 'bg-yellow-500'}`}>
+            <h1> Row</h1>
+            <span style={{ fontFamily : 'Poppins' }}>{shape[0]}</span>
           </div>
-          <div className="text-white bg-blue-900 p-2 rounded my-3 mx-1">
-            Column {shape[1]}
+          <div className={`border border-gray-300 uppercase p-2 rounded my-3 mx-1 flex gap-3
+          ${color === '#ED9ED6' && 'bg-pink-500'} ${color === '#87C4FF' && 'bg-blue-500'}
+          ${color === '#9ADE7B' && 'bg-green-500'} ${color === '#FFCF96' && 'bg-yellow-500'}`}>
+            <h1> Column </h1>
+            <span style={{ fontFamily : 'Poppins' }}>{shape[1]}</span>
           </div>
-          <div className="text-white bg-blue-900 p-2 rounded my-3 mx-1">
-            Shape {shape[0]} x {shape[1]}
+          <div className={`border border-gray-300 uppercase p-2 rounded my-3 mx-1 flex gap-3
+          ${color === '#ED9ED6' && 'bg-pink-500'} ${color === '#87C4FF' && 'bg-blue-500'}
+          ${color === '#9ADE7B' && 'bg-green-500'} ${color === '#FFCF96' && 'bg-yellow-500'}`}>
+            <h1> Shape </h1>
+            <span style={{ fontFamily : 'Poppins' }}>{shape[0]} x {shape[1]}</span>
           </div>
         </div>
+        <div>
+        {props.shapeDisplay ? (
+          <div className="flex">
+            <div className="text-white p-2 rounded my-3 font-mono bg-cyan-900">
+              Current Shape {props.rows} x {shape[1]}
+            </div>
+          </div>
+        ) : null}
+        </div>
+        </div>
+        </>
       ) : null}
-      <table>
+      <div className=" flex justify-center">
+      <div className="w-5/6 max-h-96 overflow-auto rounded-md"
+      style={{boxShadow: 'rgba(0,0,0,0.2) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px'}}>
+      <table className=" w-full">
         <thead>
           <tr>
             {Object.keys(data).map((key, index) => (
               <th
-                className="text-white bg-blue-900 font-thin  p-2 border-0 "
+                className={`font-thin  p-2 border-0
+          ${color === '#ED9ED6' && 'bg-pink-500'} ${color === '#87C4FF' && 'bg-blue-500'}
+          ${color === '#9ADE7B' && 'bg-green-500'} ${color === '#FFCF96' && 'bg-yellow-500'}`}
+                style={{
+                  fontFamily : 'Poppins'
+               }}
                 key={index}
               >
                 {key}
@@ -79,12 +111,16 @@ function Dataframe(props) {
         </thead>
         <tbody className="bg-red-900">
           {buttonArray.map((index) => (
-            <tr>
+            <tr style={{
+              fontFamily : 'Poppins'
+           }}>
               {Object.values(data).map((values, idx) =>
                 values.length > 0 ? (
                   <>
                     <td
-                      className="bg-blue-950 text-white font-mono border-0"
+                      colSpan={1}
+                      style={{ background : '#FFF6F6',color : '#164863',fontFamily : 'Poppins',}}
+                      className=" p-2 text-white font-semibold border-0"
                       key={idx}
                     >
                       {values[index]}
@@ -96,13 +132,8 @@ function Dataframe(props) {
           ))}
         </tbody>
       </table>
-      {props.shapeDisplay ? (
-        <div className="flex">
-          <div className="text-white p-2 rounded my-3 font-mono bg-cyan-900">
-            Shape {props.rows} x {shape[1]}
-          </div>
-        </div>
-      ) : null}
+      </div>
+      </div>
     </div>
   );
 }
