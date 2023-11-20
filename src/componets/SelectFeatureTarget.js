@@ -115,8 +115,8 @@ function SelectFeatureTarget() {
           )}
         </>
       ))}
-
-      <h2 className="text-xl mx-2 my-3 font-semibold " style={{fontFamily : 'ClashGrotesk'}}>Target:</h2>
+            <h2 className={`text-2xl mb-4 p-5 font-semibold border-t-2 border-b-2 ${color === '#ED9ED6' && 'border-pink-500'} ${color === '#87C4FF' && 'border-blue-500'}
+      ${color === '#9ADE7B' && 'border-green-500'} ${color === '#FFCF96' && 'border-yellow-500'}`} style={{fontFamily : 'ClashGrotesk'}}>Target</h2>
       {columns.map((column, index) => (
         <button
           className={`p-2 m-1 rounded-sm hover:bg-slate-200 ${

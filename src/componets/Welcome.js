@@ -42,16 +42,16 @@ function Welcome({ triggerReloadSelectedFile }) {
         boxShadow: 'rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba( 10, 60, 255, 0.2 ) 0px 32px 16px',
         fontFamily : 'Poppins'
       }}>
-        <div className=" text-2xl p-2">
-          <h1 className="">MLOW</h1>
+        <div className=" text-2xl p-3">
+          <h1 className="">ML Workflow</h1>
         </div>
         <nav className=" flex gap-5 mr-4">
-          <li className=" list-none text-xl border-r-2 pr-3  outline outline-offset-4"><a href="#">Home</a></li>
+          <li className=" list-none text-xl border-r-2 pr-3 "><a href="#">Home</a></li>
           <li className=" list-none text-xl border-r-2 pr-3"><a href="#">Pricing</a></li>
           <li className=" list-none text-xl"><a href="#">Help</a></li>
         </nav>
         <ul>
-        <li className=" list-none text-xl bg-purple-500 transition delay-100 hover:bg-pink-400 shadow-purple-500 px-4 rounded-3xl p-3"
+        <li className=" list-none text-xl bg-blue-500 transition delay-100 hover:bg-green-500 shadow-purple-500 px-4 rounded-3xl p-3"
         style={{ boxShadow : '0 0 15px 5px rgba(240, 46, 170, 0.3)'}}><a href="#">Connect</a></li>
         </ul>
       </header>

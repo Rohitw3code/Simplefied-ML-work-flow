@@ -10,7 +10,7 @@ function TrainTestSplit() {
   const [trainsize, setTrainSize] = useState(80);
   const [trainshape, setTrainShape] = useState([]);
   const [testshape, setTestShape] = useState([]);
-  const color = useContext(ThemeContext)
+  const color = useContext(ThemeContext);
 
   const splitDf = async () => {
     const url = "http://127.0.0.1:5001/api/train-test-split";
@@ -64,16 +64,31 @@ function TrainTestSplit() {
 
   return (
     <>
-      <h4 className="text-lg mx-2 my-3 font-semibold"  style={{fontFamily : 'ClashGrotesk'}}>
+      <h2
+        className={`text-2xl mb-4 p-5 font-semibold border-t-2 border-b-2 ${
+          color === "#ED9ED6" && "border-pink-500"
+        } ${color === "#87C4FF" && "border-blue-500"}
+      ${color === "#9ADE7B" && "border-green-500"} ${
+          color === "#FFCF96" && "border-yellow-500"
+        }`}
+        style={{ fontFamily: "ClashGrotesk" }}
+      >
         Train Test Split
-      </h4>
+      </h2>
+
       {!success && message}
       <div className="train-test-split-field-tts ">
         <div className="mx-5">
-          <h3 className=""  style={{fontFamily : 'ClashGrotesk'}}>Random State</h3>
+          <h3 className="" style={{ fontFamily: "ClashGrotesk" }}>
+            Random State
+          </h3>
           <input
-            className={`w-20 h-10 text-white p-1 rounded-xl my-5  ${color === '#ED9ED6' && 'bg-pink-500'} ${color === '#87C4FF' && 'bg-blue-500'}
-            ${color === '#9ADE7B' && 'bg-green-500'} ${color === '#FFCF96' && 'bg-yellow-500'}`}
+            className={`w-20 h-10 text-white p-1 rounded-xl my-5  ${
+              color === "#ED9ED6" && "bg-pink-500"
+            } ${color === "#87C4FF" && "bg-blue-500"}
+            ${color === "#9ADE7B" && "bg-green-500"} ${
+              color === "#FFCF96" && "bg-yellow-500"
+            }`}
             placeholder="random state"
             type="number"
             value={randomstate}
@@ -82,10 +97,16 @@ function TrainTestSplit() {
         </div>
 
         <div className="mx-10">
-          <h3 className=""  style={{fontFamily : 'ClashGrotesk'}}>Train Size</h3>
+          <h3 className="" style={{ fontFamily: "ClashGrotesk" }}>
+            Train Size
+          </h3>
           <input
-            className={`w-20 h-10 text-white p-1 rounded-xl mx-3 my-5  ${color === '#ED9ED6' && 'bg-pink-500'} ${color === '#87C4FF' && 'bg-blue-500'}
-            ${color === '#9ADE7B' && 'bg-green-500'} ${color === '#FFCF96' && 'bg-yellow-500'}`}
+            className={`w-20 h-10 text-white p-1 rounded-xl mx-3 my-5  ${
+              color === "#ED9ED6" && "bg-pink-500"
+            } ${color === "#87C4FF" && "bg-blue-500"}
+            ${color === "#9ADE7B" && "bg-green-500"} ${
+              color === "#FFCF96" && "bg-yellow-500"
+            }`}
             placeholder="train-size %"
             type="number"
             value={trainsize}
@@ -97,18 +118,30 @@ function TrainTestSplit() {
       <div className="shuffle-tts">
         <label className="font-semibold">Shuffle</label>
         <select
-          className={` p-2 rounded-md mx-3  ${color === '#ED9ED6' && 'bg-pink-500'} ${color === '#87C4FF' && 'bg-blue-500'}
-          ${color === '#9ADE7B' && 'bg-green-500'} ${color === '#FFCF96' && 'bg-yellow-500'}`}
+          className={` p-2 rounded-md mx-3  ${
+            color === "#ED9ED6" && "bg-pink-500"
+          } ${color === "#87C4FF" && "bg-blue-500"}
+          ${color === "#9ADE7B" && "bg-green-500"} ${
+            color === "#FFCF96" && "bg-yellow-500"
+          }`}
           value={shuffle || true}
           onChange={(e) => handleShuffle(e.target.value)}
         >
-          <option className="bg-white" value="true">true</option>
-          <option className="bg-white" value="false">false</option>
+          <option className="bg-white" value="true">
+            true
+          </option>
+          <option className="bg-white" value="false">
+            false
+          </option>
         </select>
 
         <button
-          className={`p-2 w-20  rounded-xl  ${color === '#ED9ED6' && 'bg-pink-500'} ${color === '#87C4FF' && 'bg-blue-500'}
-          ${color === '#9ADE7B' && 'bg-green-500'} ${color === '#FFCF96' && 'bg-yellow-500'}`}
+          className={`p-2 w-20  rounded-xl  ${
+            color === "#ED9ED6" && "bg-pink-500"
+          } ${color === "#87C4FF" && "bg-blue-500"}
+          ${color === "#9ADE7B" && "bg-green-500"} ${
+            color === "#FFCF96" && "bg-yellow-500"
+          }`}
           onClick={() => {
             splitDf();
           }}
@@ -116,22 +149,28 @@ function TrainTestSplit() {
           split
         </button>
 
+        <h2 className={`text-2xl my-2 mb-4 p-5 font-semibold border-t-2 border-b-2 ${color === '#ED9ED6' && 'border-pink-500'} ${color === '#87C4FF' && 'border-blue-500'}
+      ${color === '#9ADE7B' && 'border-green-500'} ${color === '#FFCF96' && 'border-yellow-500'}`} style={{fontFamily : 'ClashGrotesk'}}>
         <div>
           {trainshape.length === 0 ? (
             ""
           ) : (
             <>
-              <p className="py-4">No. of rows in Train {trainshape[0]}</p>
+              <p className="py-4">No. of rows in Train : {trainshape[0]}</p>
             </>
           )}
           {testshape.length === 0 ? (
             ""
           ) : (
             <>
-              <p className="py-4">No. of rows in Test {testshape[0]}</p>
+              <p className="py-4">No. of rows in Test : {testshape[0]}</p>
             </>
           )}
         </div>
+
+      </h2>
+
+
       </div>
     </>
   );
